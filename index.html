@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhishek Kumar — AI-Enabled Engineer</title>
+  <meta name="description" content="AI-Enabled Software Engineer building with LLMs, RAG & Agentic AI. Frontend specialist in Next.js, React, TypeScript.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --bg-elevated: #141416;
+      --bg-card: #1a1a1e;
+      --border: #2a2a2e;
+      --ink: #e8e8ed;
+      --muted: #8a8a96;
+      --accent: #6366f1;
+      --accent-dim: #4f46e5;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --green: #22c55e;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--ink); line-height: 1.6; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 0;
+      background: rgba(10, 10, 11, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    nav .logo { font-weight: 700; font-size: 18px; color: var(--ink); text-decoration: none; letter-spacing: -0.5px; }
+    nav .logo span { color: var(--accent); }
+    nav ul { display: flex; list-style: none; gap: 28px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--ink); }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; }
+    .hero-content { max-width: 720px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid var(--border); background: var(--bg-elevated);
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted); margin-bottom: 24px;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green); animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .hero h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; }
+    .hero h1 .accent { color: var(--accent); }
+    .hero .terminal-line {
+      font-family: var(--font-mono); font-size: 14px; color: var(--muted);
+      margin-bottom: 28px; padding: 12px 16px;
+      background: var(--bg-card); border-radius: 8px;
+      border: 1px solid var(--border); display: inline-block;
+    }
+    .hero .terminal-line .prompt { color: var(--green); }
+    .hero .terminal-line .cmd { color: var(--ink); }
+    .hero .terminal-line .cursor {
+      display: inline-block; width: 8px; height: 16px;
+      background: var(--accent); margin-left: 2px;
+      animation: blink 1s step-end infinite; vertical-align: text-bottom;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero .subtitle { font-size: clamp(16px, 2vw, 20px); color: var(--muted); line-height: 1.6; margin-bottom: 32px; max-width: 580px; }
+    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 10px; font-size: 14px;
+      font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-dim); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--muted); transform: translateY(-1px); }
+
+    section { padding: 100px 0; }
+    .section-label { font-family: var(--font-mono); font-size: 13px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+    .section-label::before { content: '> '; color: var(--green); }
+    .section-title { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 48px; }
+
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
+    .timeline-item { position: relative; padding-bottom: 48px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -36px; top: 8px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .timeline-item.current::before { background: var(--green); box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+    .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .timeline-role { font-size: 18px; font-weight: 600; }
+    .timeline-date { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding: 3px 10px; background: var(--bg-elevated); border-radius: 6px; }
+    .timeline-company { font-size: 15px; color: var(--accent); margin-bottom: 12px; }
+    .timeline-desc { color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .timeline-desc li { margin-bottom: 6px; list-style: none; position: relative; padding-left: 16px; }
+    .timeline-desc li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 13px; }
+    .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag {
+      font-family: var(--font-mono); font-size: 12px;
+      padding: 4px 10px; border-radius: 6px;
+      background: var(--accent-glow); color: var(--accent);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .skill-card { padding: 28px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-elevated); transition: border-color 0.2s; }
+    .skill-card:hover { border-color: var(--accent); }
+    .skill-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .skill-card h3 .icon { font-size: 20px; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-item { font-size: 13px; padding: 5px 12px; border-radius: 6px; background: var(--bg-card); color: var(--muted); border: 1px solid var(--border); }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+    .project-card { padding: 32px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-elevated); transition: all 0.2s; }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project-card .metric { font-family: var(--font-mono); font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .project-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+    .project-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .contact-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 24px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--bg-elevated);
+      text-decoration: none; color: var(--ink); transition: all 0.2s;
+    }
+    .contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .contact-card .icon {
+      font-size: 22px; width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-glow); border-radius: 10px;
+    }
+    .contact-card .label { font-size: 12px; color: var(--muted); }
+    .contact-card .value { font-size: 13px; font-weight: 500; word-break: break-all; }
+
+    footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .hero { padding-top: 100px; min-height: auto; padding-bottom: 60px; }
+      section { padding: 60px 0; }
+      .timeline { padding-left: 24px; }
+      .timeline-item::before { left: -28px; }
+      .timeline-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">abhishek<span>.dev</span></a>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span> Open to opportunities</div>
+        <h1>Abhishek Kumar</h1>
+        <div class="terminal-line">
+          <span class="prompt">~/abhishek $</span>
+          <span class="cmd"> whoami</span>
+          <span class="cursor"></span>
+        </div>
+        <h1 style="font-size: clamp(24px, 3.5vw, 36px); margin-top: -8px; margin-bottom: 24px;">
+          <span class="accent">AI-Enabled Engineer</span>
+        </h1>
+        <p class="subtitle">
+          Building production-grade applications at the intersection of software engineering and modern AI.
+          Proficient in LLM integration, RAG pipelines, agentic workflows, and prompt engineering.
+          Ships 10x faster with Claude Code, Cursor, and GitHub Copilot.
+        </p>
+        <div class="hero-links">
+          <a href="#experience" class="btn btn-primary">View Experience</a>
+          <a href="https://github.com/abhishek-data" target="_blank" class="btn btn-secondary">GitHub →</a>
+          <a href="https://linkedin.com/in/abhishek1915" target="_blank" class="btn btn-secondary">LinkedIn →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="section-label">About</div>
+      <div class="section-title">What I do</div>
+      <div style="max-width: 680px; color: var(--muted); font-size: 16px; line-height: 1.8;">
+        <p>I'm an AI-Enabled Software Engineer who builds at the intersection of traditional software engineering and modern AI. I don't just use AI tools — I architect AI-native solutions with LLMs, RAG systems, and agentic workflows.</p>
+        <br>
+        <p>With 4+ years of experience across healthcare, e-commerce, education, and finance, I combine full-stack development (React, Next.js, Python) with deep understanding of LLMs, vector databases, and agent frameworks. My daily drivers are Claude Code, Cursor, and GitHub Copilot — tools that let me ship at 10x speed without sacrificing quality.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" style="background: var(--bg-elevated);">
+    <div class="container">
+      <div class="section-label">Experience</div>
+      <div class="section-title">Where I've worked</div>
+      <div class="timeline">
+        <div class="timeline-item current">
+          <div class="timeline-header">
+            <div class="timeline-role">Software Engineer</div>
+            <div class="timeline-date">Dec 2025 — Present</div>
+          </div>
+          <div class="timeline-company">FORCHUNEX IT CONSULTANCY · Full-time · Remote</div>
+          <ul class="timeline-desc">
+            <li>AI-Enabled Engineer building with LLMs, RAG pipelines, and agentic AI workflows</li>
+            <li>Architecting AI-native solutions using LangChain, LangGraph, and vector databases</li>
+            <li>Integrating Claude, GPT, and Gemini APIs into production applications</li>
+            <li>Shipping 10x faster using Claude Code, Cursor, and GitHub Copilot as daily drivers</li>
+            <li>Prompt engineering for structured outputs, function calling, and chain-of-thought reasoning</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">Agentic AI</span>
+            <span class="tag">LangChain</span><span class="tag">Prompt Engineering</span><span class="tag">Claude Code</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <div class="timeline-role">Software Development Engineer</div>
+            <div class="timeline-date">Jan 2024 — Nov 2025</div>
+          </div>
+          <div class="timeline-company">Infyni · Full-time · Gurugram</div>
+          <ul class="timeline-desc">
+            <li>Led development and optimization of scalable web applications using React.js and Next.js</li>
+            <li>Designed and maintained role-based access control systems for 100,000+ users</li>
+            <li>Enhanced engagement with seamless live video experiences and interactive sessions</li>
+            <li>Mentored team members on modern React best practices, hooks, and reusable architecture</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">RBAC</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <div class="timeline-role">Software Developer</div>
+            <div class="timeline-date">Apr 2023 — Nov 2023</div>
+          </div>
+          <div class="timeline-company">theoceann.com · Full-time · Noida</div>
+          <ul class="timeline-desc">
+            <li>Migrated React codebase from class to functional components, upgraded to React 18</li>
+            <li>Implemented live chat using web sockets for real-time communication</li>
+            <li>Managed Jenkins CI/CD pipeline for improved development and deployment</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">React 18</span><span class="tag">WebSockets</span><span class="tag">Jenkins</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <div class="timeline-role">Software Developer</div>
+            <div class="timeline-date">Oct 2021 — Mar 2023</div>
+          </div>
+          <div class="timeline-company">Zenex Animal Health India · Remote</div>
+          <ul class="timeline-desc">
+            <li>Enhanced and maintained Employee Reporting System frontend using React</li>
+            <li>Ensured seamless integration with backend APIs and databases</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">React</span><span class="tag">REST APIs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">Skills</div>
+      <div class="section-title">What I work with</div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3><span class="icon">🤖</span> AI & LLMs</h3>
+          <div class="skill-list">
+            <span class="skill-item">LLM APIs (Claude, GPT, Gemini)</span>
+            <span class="skill-item">LangChain</span><span class="skill-item">LangGraph</span>
+            <span class="skill-item">RAG Architecture</span><span class="skill-item">Vector DBs</span>
+            <span class="skill-item">Prompt Engineering</span><span class="skill-item">Agentic Workflows</span>
+            <span class="skill-item">Fine-tuning (LoRA)</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3><span class="icon">⚡</span> Frontend</h3>
+          <div class="skill-list">
+            <span class="skill-item">React.js</span><span class="skill-item">Next.js</span>
+            <span class="skill-item">TypeScript</span><span class="skill-item">Redux</span>
+            <span class="skill-item">Tailwind CSS</span><span class="skill-item">Responsive Design</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3><span class="icon">🔧</span> Backend & DevOps</h3>
+          <div class="skill-list">
+            <span class="skill-item">Node.js</span><span class="skill-item">Express.js</span>
+            <span class="skill-item">Python</span><span class="skill-item">FastAPI</span>
+            <span class="skill-item">PostgreSQL</span><span class="skill-item">MongoDB</span>
+            <span class="skill-item">Docker</span><span class="skill-item">CI/CD</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3><span class="icon">🛠</span> AI-Augmented Dev</h3>
+          <div class="skill-list">
+            <span class="skill-item">Claude Code</span><span class="skill-item">Cursor</span>
+            <span class="skill-item">GitHub Copilot</span><span class="skill-item">Windsurf</span>
+            <span class="skill-item">LangSmith</span><span class="skill-item">Langfuse</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" style="background: var(--bg-elevated);">
+    <div class="container">
+      <div class="section-label">Projects</div>
+      <div class="section-title">Impact I've delivered</div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="metric">25%</div>
+          <h3>Next.js Migration</h3>
+          <p>Led migration from React to Next.js at Infyni, implementing SSR and optimized routing. Achieved 25% increase in user engagement through improved performance.</p>
+        </div>
+        <div class="project-card">
+          <div class="metric">100K+</div>
+          <h3>Role-Based Access Control</h3>
+          <p>Implemented authentication system managing 100,000 users across 4 distinct roles — Student, Instructor, Business Instructor, and Business Admin.</p>
+        </div>
+        <div class="project-card">
+          <div class="metric">10x</div>
+          <h3>AI-Native Development</h3>
+          <p>Architecting AI-native solutions with RAG pipelines, agentic workflows, and LLM integration. Shipping 10x faster using Claude Code and Cursor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-label">Contact</div>
+      <div class="section-title">Let's connect</div>
+      <div class="contact-grid">
+        <a href="mailto:abhishekkr1915@gmail.com" class="contact-card">
+          <div class="icon">✉</div>
+          <div><div class="label">Email</div><div class="value">abhishekkr1915@gmail.com</div></div>
+        </a>
+        <a href="https://linkedin.com/in/abhishek1915" target="_blank" class="contact-card">
+          <div class="icon">in</div>
+          <div><div class="label">LinkedIn</div><div class="value">abhishek1915</div></div>
+        </a>
+        <a href="https://github.com/abhishek-data" target="_blank" class="contact-card">
+          <div class="icon">⌨</div>
+          <div><div class="label">GitHub</div><div class="value">abhishek-data</div></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p style="font-family: var(--font-mono);">© 2026 Abhishek Kumar <span style="color: var(--muted);">// shipping ideas into reality</span></p>
+    </div>
+  </footer>
+</body>
+</html>
