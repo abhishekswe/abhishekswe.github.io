@@ -1,383 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abhishek Kumar — Software Engineer</title>
-  <meta name="description" content="Software engineer with 4+ years in React, Next.js & TypeScript, building local-first AI-powered developer tools — including PIE, an on-device voice→prompt engine in Rust.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0a0a0b;
-      --bg-elevated: #141416;
-      --bg-card: #1a1a1e;
-      --border: #2a2a2e;
-      --ink: #e8e8ed;
-      --muted: #8a8a96;
-      --accent: #6366f1;
-      --accent-dim: #4f46e5;
-      --accent-glow: rgba(99, 102, 241, 0.15);
-      --green: #22c55e;
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body { font-family: var(--font-sans); background: var(--bg); color: var(--ink); line-height: 1.6; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishek Kumar — Software Engineer</title>
+<meta name="description" content="Software engineer with 4+ years of React, Next.js & TypeScript in production, building local-first AI developer tools — including PIE, an on-device voice→prompt engine in Rust.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#0f1013; --plate:#15161a; --plate-2:#191a1f; --hairline:#292a30; --hairline-2:#34353c;
+    --ink:#e9e5da; --ink-dim:#b6b2a7; --ink-faint:#8f8b81;
+    --nm405:#a06bff; --nm436:#6d84ff; --nm486:#45c6ff; --nm546:#55e08c;
+    --nm589:#ffd84a; --nm615:#ff9b45; --nm656:#ff5a52;
+    --rail-w:216px;
+    --font-b:'Barlow',system-ui,sans-serif;
+    --font-c:'Barlow Condensed','Barlow',system-ui,sans-serif;
+    --ease-settle:cubic-bezier(.22,1.22,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *,*::before,*::after{transition:none!important;animation:none!important} }
+  body{
+    font-family:var(--font-b); background:var(--ground); color:var(--ink);
+    font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 78% -5%, rgba(255,216,74,.045), transparent 60%),
+      radial-gradient(900px 700px at -10% 40%, rgba(69,198,255,.03), transparent 55%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 2px, transparent 2px 5px, rgba(255,255,255,.006) 5px 9px, transparent 9px 14px);
+  }
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:60; opacity:.05; mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+  }
+  ::selection{background:rgba(255,216,74,.25);color:var(--ink)}
+  a{color:var(--ink);text-decoration:none}
+  :focus-visible{outline:1px dashed var(--ink-dim);outline-offset:4px}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--plate-2);padding:8px 16px;z-index:100}
+  .skip:focus{left:8px;top:8px}
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 16px 0;
-      background: rgba(10, 10, 11, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .container { display: flex; justify-content: space-between; align-items: center; }
-    nav .logo { font-weight: 700; font-size: 18px; color: var(--ink); text-decoration: none; letter-spacing: -0.5px; }
-    nav .logo span { color: var(--accent); }
-    nav ul { display: flex; list-style: none; gap: 28px; }
-    nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
-    nav a:hover { color: var(--ink); }
+  /* ---------- shared vocabulary ---------- */
+  .caps{font-family:var(--font-b);font-weight:600;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
+  .caps-dim{font-family:var(--font-b);font-weight:500;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim)}
+  h1,h2{font-family:var(--font-c);font-weight:600;text-transform:uppercase;line-height:.95;letter-spacing:.015em;text-wrap:balance}
+  h2{font-size:clamp(2rem,4vw,3.1rem);margin-bottom:14px}
+  .measure{max-width:62ch;color:var(--ink-dim)}
+  .arrow{display:inline-block;vertical-align:-1px;margin-left:8px}
+  .arrow svg{display:block}
 
-    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  /* emission hairline: 1px line + soft glow */
+  .eline{position:relative}
+  .eline::before{
+    content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:var(--c,var(--ink));
+    box-shadow:0 0 8px 1px color-mix(in srgb,var(--c,var(--ink)) 55%, transparent);
+  }
 
-    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; }
-    .hero-content { max-width: 720px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 14px; border-radius: 100px;
-      border: 1px solid var(--border); background: var(--bg-elevated);
-      font-family: var(--font-mono); font-size: 13px; color: var(--muted); margin-bottom: 24px;
-    }
-    .hero-badge .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--green); animation: pulse 2s infinite;
-    }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .hero h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; }
-    .hero h1 .accent { color: var(--accent); }
-    .hero .terminal-line {
-      font-family: var(--font-mono); font-size: 14px; color: var(--muted);
-      margin-bottom: 28px; padding: 12px 16px;
-      background: var(--bg-card); border-radius: 8px;
-      border: 1px solid var(--border); display: inline-block;
-    }
-    .hero .terminal-line .prompt { color: var(--green); }
-    .hero .terminal-line .cmd { color: var(--ink); }
-    .hero .terminal-line .cursor {
-      display: inline-block; width: 8px; height: 16px;
-      background: var(--accent); margin-left: 2px;
-      animation: blink 1s step-end infinite; vertical-align: text-bottom;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-    .hero .subtitle { font-size: clamp(16px, 2vw, 20px); color: var(--muted); line-height: 1.6; margin-bottom: 32px; max-width: 580px; }
-    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border-radius: 10px; font-size: 14px;
-      font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
-    }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: var(--accent-dim); transform: translateY(-1px); }
-    .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
-    .btn-secondary:hover { border-color: var(--muted); transform: translateY(-1px); }
+  /* button plates */
+  .btn{
+    display:inline-flex;align-items:center;gap:12px;position:relative;
+    padding:13px 20px 13px 24px;border:1px solid var(--hairline-2);background:var(--plate);
+    font-weight:600;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .btn::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:1px;background:var(--c,var(--ink));box-shadow:0 0 9px 1px color-mix(in srgb,var(--c,var(--ink)) 60%, transparent)}
+  .btn:hover{border-style:dashed;border-color:var(--ink-faint);background:var(--plate-2)}
 
-    section { padding: 100px 0; }
-    .section-label { font-family: var(--font-mono); font-size: 13px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
-    .section-label::before { content: '> '; color: var(--green); }
-    .section-title { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 48px; }
+  /* ---------- page rail ---------- */
+  .rail{
+    position:fixed;left:0;top:0;bottom:0;width:var(--rail-w);z-index:40;
+    padding:34px 0 28px 34px;display:flex;flex-direction:column;
+    border-right:1px solid var(--hairline);
+    background:linear-gradient(180deg,rgba(15,16,19,.6),rgba(15,16,19,.2));
+  }
+  .rail .brand{font-family:var(--font-c);font-weight:600;font-size:1.05rem;letter-spacing:.14em;line-height:1.25;text-transform:uppercase}
+  .rail nav{margin-top:52px;display:flex;flex-direction:column;gap:30px;position:relative}
+  .rail nav::before{content:"";position:absolute;left:0;top:-18px;bottom:-18px;width:1px;background:var(--hairline-2)}
+  .rail nav a{display:block;position:relative;padding-left:26px;color:var(--ink-dim);transition:color .18s ease}
+  .rail nav a .t1{display:block;font-weight:600;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+  .rail nav a .t2{display:block;font-weight:500;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-top:2px}
+  .rail nav a::before{content:"";position:absolute;left:0;top:-2px;height:24px;width:1px;background:var(--c);box-shadow:0 0 7px 1px color-mix(in srgb,var(--c) 55%, transparent);transform:scaleY(.58);transform-origin:50% 35%;transition:transform .25s var(--ease-settle)}
+  .rail nav a::after{content:"";position:absolute;left:-3px;top:8px;width:7px;height:1px;background:var(--hairline-2)}
+  .rail nav a[aria-current]{color:var(--ink)}
+  .rail nav a[aria-current]::before{transform:scaleY(1)}
+  .rail nav a[aria-current] .t2{color:var(--ink-dim)}
+  .rail .foot{margin-top:auto;padding-right:26px}
+  .rail .foot .caps-dim{font-size:.62rem}
 
-    .timeline { position: relative; padding-left: 32px; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
-    .timeline-item { position: relative; padding-bottom: 48px; }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-item::before {
-      content: ''; position: absolute; left: -36px; top: 8px;
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--bg);
-    }
-    .timeline-item.current::before { background: var(--green); box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
-    .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-    .timeline-role { font-size: 18px; font-weight: 600; }
-    .timeline-date { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding: 3px 10px; background: var(--bg-elevated); border-radius: 6px; }
-    .timeline-company { font-size: 15px; color: var(--accent); margin-bottom: 12px; }
-    .timeline-desc { color: var(--muted); font-size: 15px; line-height: 1.7; }
-    .timeline-desc li { margin-bottom: 6px; list-style: none; position: relative; padding-left: 16px; }
-    .timeline-desc li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 13px; }
-    .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-    .tag {
-      font-family: var(--font-mono); font-size: 12px;
-      padding: 4px 10px; border-radius: 6px;
-      background: var(--accent-glow); color: var(--accent);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-    }
+  /* mobile top bar */
+  .topbar{display:none}
 
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .skill-card { padding: 28px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-elevated); transition: border-color 0.2s; }
-    .skill-card:hover { border-color: var(--accent); }
-    .skill-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-    .skill-card h3 .icon { font-size: 20px; }
-    .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill-item { font-size: 13px; padding: 5px 12px; border-radius: 6px; background: var(--bg-card); color: var(--muted); border: 1px solid var(--border); }
+  main{margin-left:var(--rail-w)}
+  section{padding:96px clamp(28px,6vw,88px);border-bottom:1px solid var(--hairline);position:relative}
 
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-    .project-card { padding: 32px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-elevated); transition: all 0.2s; }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .project-card .metric { font-family: var(--font-mono); font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
-    .project-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
-    .project-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  /* ---------- hero ---------- */
+  #spectrum{padding-top:110px;padding-bottom:0}
+  .hero-grid{display:grid;grid-template-columns:minmax(340px,5fr) 7fr;gap:clamp(32px,4vw,72px);align-items:end}
+  h1{font-size:clamp(3.2rem,6.5vw,6rem);font-weight:700}
+  .hero-copy p{margin-top:22px}
+  .status{display:flex;align-items:center;gap:12px;margin-top:26px}
+  .status .dotline{width:1px;height:16px;background:var(--nm546);box-shadow:0 0 8px 1px rgba(85,224,140,.6)}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
 
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-    .contact-card {
-      display: flex; align-items: center; gap: 14px;
-      padding: 20px 24px; border-radius: 12px;
-      border: 1px solid var(--border); background: var(--bg-elevated);
-      text-decoration: none; color: var(--ink); transition: all 0.2s;
-    }
-    .contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .contact-card .icon {
-      font-size: 22px; width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--accent-glow); border-radius: 10px;
-    }
-    .contact-card .label { font-size: 12px; color: var(--muted); }
-    .contact-card .value { font-size: 13px; font-weight: 500; word-break: break-all; }
+  /* spectrum plate */
+  .plate-spectrum{position:relative;border:1px solid var(--hairline);background:
+      linear-gradient(180deg,#131418,#101115 70%,#0e0f12);
+      min-height:380px;overflow:hidden}
+  .plate-spectrum .bloom{position:absolute;inset:0;background:
+      radial-gradient(220px 100% at var(--bloom-x,86%) 50%, rgba(255,216,74,.10), transparent 70%),
+      linear-gradient(90deg, transparent 2%, rgba(232,228,218,.035) 24%, rgba(232,228,218,.075) 48%, rgba(232,228,218,.05) 68%, rgba(232,228,218,.09) 88%, rgba(232,228,218,.02) 98%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 4px, rgba(255,255,255,.015) 4px 5px, transparent 5px 9px);}
+  .spec-lines{position:absolute;left:0;right:0;top:26px;bottom:64px}
+  .sline{position:absolute;top:0;bottom:0;left:calc(var(--x)*1%);width:14px;margin-left:-7px;display:block}
+  .sline i{position:absolute;left:50%;top:0;bottom:0;width:var(--w,1px);margin-left:calc(var(--w,1px)/-2);background:var(--c);
+    box-shadow:0 0 10px 1px color-mix(in srgb,var(--c) 70%, transparent), 0 0 26px 4px color-mix(in srgb,var(--c) 22%, transparent);
+    transform-origin:50% 100%}
+  .sline.pair i:nth-child(2){transform:translateX(5px)}
+  .sline .tip{position:absolute;left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);white-space:nowrap;
+    background:var(--plate-2);border:1px solid var(--hairline-2);padding:5px 10px;font-size:.66rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink);opacity:0;pointer-events:none;transition:opacity .15s ease;z-index:5}
+  .sline:hover .tip,.sline:focus-visible .tip{opacity:1}
+  .sline:hover i{box-shadow:0 0 12px 2px color-mix(in srgb,var(--c) 85%, transparent), 0 0 34px 7px color-mix(in srgb,var(--c) 30%, transparent)}
+  .spec-axis{position:absolute;left:0;right:0;bottom:0;height:64px;border-top:1px solid var(--hairline-2)}
+  .spec-axis .yr{position:absolute;left:calc(var(--x)*1%);transform:translateX(-50%);top:14px;font-size:.66rem;font-weight:500;letter-spacing:.14em;color:var(--ink-faint)}
+  .spec-axis .yr::before{content:"";position:absolute;top:-15px;left:50%;width:1px;height:6px;background:var(--hairline-2)}
+  .spec-caption{position:absolute;right:18px;bottom:10px;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);font-weight:500}
+  .spec-key{position:absolute;left:18px;bottom:10px;display:flex;gap:18px}
+  .spec-key span{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);font-weight:500;position:relative;padding-left:12px}
+  .spec-key span::before{content:"";position:absolute;left:0;top:1px;bottom:1px;width:1px;background:var(--c);box-shadow:0 0 6px 1px color-mix(in srgb,var(--c) 55%, transparent)}
 
-    footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 13px; }
+  /* settle animation */
+  .willsettle .sline i{transform:scaleY(.15);opacity:0}
+  .settled .sline i{transform:scaleY(1);opacity:1;transition:transform .9s var(--ease-settle) calc(var(--i,0)*90ms),opacity .5s ease calc(var(--i,0)*90ms)}
+  .settled .sline.pair i:nth-child(2){transform:translateX(5px) scaleY(1)}
 
-    @media (max-width: 640px) {
-      nav ul { display: none; }
-      .hero { padding-top: 100px; min-height: auto; padding-bottom: 60px; }
-      section { padding: 60px 0; }
-      .timeline { padding-left: 24px; }
-      .timeline-item::before { left: -28px; }
-      .timeline-header { flex-direction: column; }
-    }
-  </style>
+  /* stat plates */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--hairline);border-bottom:none;margin-top:64px}
+  .stat{padding:26px 28px 30px;border-right:1px solid var(--hairline);background:linear-gradient(180deg,var(--plate),transparent)}
+  .stat:last-child{border-right:none}
+  .stat .k{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
+  .stat .v{font-family:var(--font-c);font-weight:600;font-size:clamp(1.9rem,3vw,2.6rem);margin-top:10px;line-height:1}
+  .stat .s{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;font-weight:500}
+
+  /* ---------- work ---------- */
+  .lede{max-width:62ch;color:var(--ink-dim);margin-bottom:56px}
+  .job{display:grid;grid-template-columns:minmax(240px,3fr) 7fr;gap:clamp(24px,4vw,64px);padding:44px 0 44px 28px;border-top:1px solid var(--hairline)}
+  .job:last-of-type{padding-bottom:8px}
+  .job-head .co{font-family:var(--font-c);font-weight:600;font-size:1.5rem;text-transform:uppercase;letter-spacing:.03em;line-height:1.1}
+  .job-head .role{margin-top:8px;color:var(--ink-dim);font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .job-head .dates{margin-top:6px;color:var(--ink-faint);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+  .job-body ul{list-style:none;color:var(--ink-dim)}
+  .job-body li{position:relative;padding-left:20px;margin-bottom:10px}
+  .job-body li::before{content:"";position:absolute;left:0;top:.72em;width:10px;height:1px;background:var(--ink-faint)}
+  .tags{display:flex;flex-wrap:wrap;gap:0;margin-top:18px}
+  .tags span{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);padding:0 14px;border-left:1px solid var(--hairline-2)}
+  .tags span:first-child{padding-left:0;border-left:none}
+  .mats{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px}
+  .mat{border:1px solid var(--hairline-2);background:var(--plate);transition:border-color .18s ease}
+  .mat img{display:block;width:100%;height:auto;filter:grayscale(1) contrast(.92) brightness(.82);transition:filter .35s ease;border-bottom:1px solid var(--hairline)}
+  .mat:hover img{filter:grayscale(0) contrast(1) brightness(.96)}
+  .mat:hover{border-style:dashed;border-color:var(--ink-faint)}
+  .mat .cap{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;position:relative}
+  .mat .cap::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--c);box-shadow:0 0 8px 1px color-mix(in srgb,var(--c) 55%, transparent)}
+  .mat .cap b{font-weight:600;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding-left:14px}
+  .mat .cap span{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:500}
+  .mat.single{max-width:640px}
+
+  /* ---------- PIE ---------- */
+  #pie .doublet{height:12px;position:relative;margin-bottom:54px}
+  #pie .doublet::before,#pie .doublet::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--nm589);box-shadow:0 0 10px 1px rgba(255,216,74,.55)}
+  #pie .doublet::before{top:2px}
+  #pie .doublet::after{top:9px;opacity:.8}
+  .pie-grid{display:grid;grid-template-columns:5fr 4fr;gap:clamp(32px,4vw,80px);align-items:start}
+  .pie-grid>div{min-width:0}
+  .pie-facts{list-style:none;margin-top:30px;border-top:1px solid var(--hairline)}
+  .pie-facts li{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--hairline);color:var(--ink-dim)}
+  .pie-facts b{font-weight:600;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);padding-top:3px}
+  .pipeline{border:1px solid var(--hairline);background:var(--plate);padding:30px 26px 26px;position:relative}
+  .pipeline .pl-title{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:24px}
+  .pipe{display:flex;flex-direction:column;gap:0;position:relative;padding-left:18px}
+  .pipe::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--hairline-2)}
+  .stage{position:relative;padding:11px 0 11px 20px}
+  .stage::before{content:"";position:absolute;left:-18px;top:50%;width:14px;height:1px;background:var(--hairline-2)}
+  .stage b{display:block;font-weight:600;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
+  .stage span{display:block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;margin-top:3px}
+  .ondevice{border:1px dashed var(--ink-faint);margin:6px 0;padding:4px 14px 8px;position:relative}
+  .ondevice>i{position:absolute;right:10px;top:6px;font-style:normal;font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--nm546)}
+  .install{margin-top:26px;border:1px solid var(--hairline);background:var(--plate)}
+  .install .head{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid var(--hairline)}
+  .install .head b{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
+  .install button{font-family:var(--font-b);font-weight:600;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
+    background:none;border:1px solid var(--hairline-2);padding:7px 14px;cursor:pointer;transition:border-color .15s ease}
+  .install button:hover{border-style:dashed;border-color:var(--ink-dim)}
+  .install code{display:block;padding:18px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.8rem;color:var(--ink);overflow-x:auto;white-space:pre}
+  .pie-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+
+  /* ---------- projects ---------- */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:48px}
+  .proj{border:1px solid var(--hairline);background:var(--plate);padding:28px;display:flex;flex-direction:column;gap:16px;transition:border-color .18s ease;position:relative}
+  .proj:hover{border-style:dashed;border-color:var(--ink-faint)}
+  .proj .strip{height:44px;position:relative;background:repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 1px, transparent 1px 6px);border:1px solid var(--hairline)}
+  .proj .strip i{position:absolute;top:5px;bottom:5px;width:1px;left:calc(var(--x)*1%);background:var(--c);box-shadow:0 0 8px 1px color-mix(in srgb,var(--c) 60%, transparent)}
+  .proj h3{font-family:var(--font-c);font-weight:600;font-size:1.35rem;text-transform:uppercase;letter-spacing:.03em}
+  .proj .meta{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .proj p{color:var(--ink-dim);font-size:.95rem}
+  .proj .go{margin-top:auto;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+
+  /* ---------- skills ---------- */
+  .legend{display:flex;flex-wrap:wrap;gap:34px;margin:38px 0 46px;padding:20px 26px;border:1px solid var(--hairline);background:var(--plate)}
+  .legend div{display:flex;align-items:center;gap:14px;font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim)}
+  .spec-mark{width:3px;height:20px;position:relative;flex:none}
+  .spec-mark::before{content:"";position:absolute;left:1px;width:1px;background:var(--mc,var(--ink));box-shadow:0 0 7px 1px color-mix(in srgb,var(--mc,var(--ink)) 50%, transparent)}
+  .spec-mark.full::before{top:0;bottom:0}
+  .spec-mark.half::before{top:50%;bottom:0}
+  .spec-mark.dash::before{top:0;bottom:0;background:repeating-linear-gradient(180deg,var(--mc,var(--ink)) 0 3px,transparent 3px 6px);box-shadow:none;opacity:.9}
+  .skill-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(24px,3vw,52px)}
+  .skill-col h3{font-family:var(--font-c);font-weight:600;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid var(--hairline-2);margin-bottom:6px}
+  .skill-col ul{list-style:none}
+  .skill-col li{display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid var(--hairline);color:var(--ink-dim);font-size:.92rem}
+  .skill-col li small{margin-left:auto;padding-left:12px;font-size:.56rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);text-align:right;line-height:1.6;flex:0 1 auto}
+
+  /* ---------- contact ---------- */
+  #contact{border-bottom:none;padding-bottom:56px}
+  .chan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px}
+  .chan{border:1px solid var(--hairline);background:var(--plate);padding:22px 22px 20px 26px;position:relative;transition:border-color .18s ease}
+  .chan::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:1px;background:var(--c);box-shadow:0 0 9px 1px color-mix(in srgb,var(--c) 60%, transparent)}
+  .chan:hover{border-style:dashed;border-color:var(--ink-faint)}
+  .chan b{display:block;font-weight:600;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+  .chan span{display:block;margin-top:6px;color:var(--ink-dim);font-size:.86rem;word-break:break-all}
+  footer{margin-left:var(--rail-w);padding:26px clamp(28px,6vw,88px) 34px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  footer .caps-dim{font-size:.64rem}
+  .ministrip{display:flex;gap:7px;height:14px;align-items:stretch}
+  .ministrip i{width:1px;background:var(--c);box-shadow:0 0 6px 1px color-mix(in srgb,var(--c) 55%, transparent)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:1140px){
+    .rail{display:none}
+    main,footer{margin-left:0}
+    .topbar{display:flex;position:sticky;top:0;z-index:50;justify-content:space-between;align-items:center;
+      padding:14px clamp(20px,5vw,40px);border-bottom:1px solid var(--hairline);
+      background:color-mix(in srgb, var(--ground) 88%, transparent);backdrop-filter:blur(8px)}
+    .topbar .brand{font-family:var(--font-c);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:1rem}
+    .topbar nav{display:flex;gap:18px}
+    .topbar nav a{font-size:.64rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim)}
+    .topbar nav a:hover{color:var(--ink)}
+    .hero-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}
+    .stat:nth-child(2){border-right:none}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--hairline)}
+    .job{grid-template-columns:1fr;gap:20px}
+    .pie-grid{grid-template-columns:1fr}
+    .proj-grid{grid-template-columns:1fr}
+    .skill-cols{grid-template-columns:1fr 1fr}
+    .chan-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:620px){
+    section{padding:64px 20px}
+    .topbar nav a:nth-child(n+4){display:none}
+    .mats{grid-template-columns:1fr}
+    .skill-cols{grid-template-columns:1fr}
+    .chan-grid{grid-template-columns:1fr}
+    .plate-spectrum{min-height:300px}
+    .pie-facts li{grid-template-columns:1fr;gap:4px}
+    .spec-key{display:none}
+  }
+</style>
 </head>
 <body>
-  <nav>
-    <div class="container">
-      <a href="#" class="logo">abhishek<span>.dev</span></a>
+<!--
+THESIS: A career told as a spectrogram plate — every claim a measured emission line on one
+calibrated rail; refuses the dark-hero-plus-project-cards portfolio default.
+OWN-WORLD: charcoal continuum ground with grain and faint banding; bone Barlow/Barlow Condensed
+caps ranked by tracking and ink; colour only as seven glowing 1px emission lines
+(405/436/486/546/589/615/656nm); dashed borders mark active state; images matted grayscale in graphite.
+STORY: a recruiter reads "4+ years shipped, frontend to Rust/AI, honest about what's still
+calibrating" and opens PIE or makes contact.
+FIRST VIEWPORT: name in condensed bone caps left; right, the career spectrum plate — lines
+settling onto a 2021–2026 axis, PIE as the doubled sodium line; status + two actions beneath the copy.
+FORM: emission-line rail (operate-c-emission-line-rail), chosen from dealt challengers over
+grounded candidate 3; seed key 74d7fe19.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,
+the verdict, and DESIGN.md.
+-->
+<a class="skip" href="#spectrum">Skip to content</a>
+
+<header class="topbar">
+  <a class="brand" href="#spectrum">Abhishek Kumar</a>
+  <nav aria-label="Sections">
+    <a href="#work">Work</a>
+    <a href="#pie">PIE</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<aside class="rail" aria-label="Section rail">
+  <a class="brand" href="#spectrum">Abhishek<br>Kumar</a>
+  <nav aria-label="Sections">
+    <a href="#spectrum" style="--c:var(--nm405)"><span class="t1">Spectrum</span><span class="t2">Overview</span></a>
+    <a href="#work" style="--c:var(--nm486)"><span class="t1">Shipped</span><span class="t2">Experience</span></a>
+    <a href="#pie" style="--c:var(--nm589)"><span class="t1">PIE</span><span class="t2">Featured</span></a>
+    <a href="#projects" style="--c:var(--nm615)"><span class="t1">Projects</span><span class="t2">Active</span></a>
+    <a href="#skills" style="--c:var(--nm546)"><span class="t1">Inventory</span><span class="t2">Calibration</span></a>
+    <a href="#contact" style="--c:var(--nm656)"><span class="t1">Channel</span><span class="t2">Contact</span></a>
+  </nav>
+  <div class="foot"><span class="caps-dim">Gurugram, IN</span></div>
+</aside>
+
+<main id="main">
+
+<section id="spectrum">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1>Abhishek Kumar</h1>
+      <p class="measure">Software engineer. Four-plus years of React, Next.js, and TypeScript in
+      production, now also building local-first AI developer tools in Rust. Every line on this
+      plate is real, shipped work.</p>
+      <div class="status"><span class="dotline" aria-hidden="true"></span><span class="caps">Open to opportunities</span></div>
+      <div class="hero-ctas">
+        <a class="btn" style="--c:var(--nm546)" href="#work">View the work<span class="arrow"><svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h12M8.5 1 13 5l-4.5 4"/></svg></span></a>
+        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishek-data" target="_blank" rel="noopener">GitHub<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+      </div>
+    </div>
+    <figure class="plate-spectrum willsettle" id="specplate" aria-label="Career timeline drawn as a spectrum: each line is a role or project between 2021 and 2026">
+      <div class="bloom" aria-hidden="true"></div>
+      <div class="spec-lines">
+        <a class="sline" style="--x:3.6;--c:var(--nm436);--i:0" href="#job-zenex"><i></i><span class="tip">Zenex · Frontend · 2021—23</span></a>
+        <a class="sline" style="--x:31.9;--c:var(--nm486);--i:1" href="#job-ocean"><i></i><span class="tip">theoceann · Frontend · 2023</span></a>
+        <a class="sline" style="--x:45.3;--c:var(--nm546);--i:2;--w:1.5px" href="#job-infyni"><i></i><span class="tip">Infyni · SDE · 2024—25</span></a>
+        <a class="sline" style="--x:81.5;--c:var(--nm656);--i:3;--w:1.5px" href="#job-forchunex"><i></i><span class="tip">Forchunex · Magrabi / Doctor M · now</span></a>
+        <a class="sline" style="--x:86.5;--c:var(--nm615);--i:4" href="#projects"><i></i><span class="tip">DevVault · 2026</span></a>
+        <a class="sline" style="--x:89;--c:var(--nm436);--i:5" href="#projects"><i></i><span class="tip">VoiceNote AI · 2026</span></a>
+        <a class="sline pair" style="--x:94;--c:var(--nm589);--i:6;--w:1.5px" href="#pie"><i></i><i></i><span class="tip">PIE · v0.5.0 · the doubled line</span></a>
+      </div>
+      <div class="spec-axis" aria-hidden="true">
+        <span class="yr" style="--x:7.5">2022</span><span class="yr" style="--x:26.4">2023</span><span class="yr" style="--x:45.3">2024</span><span class="yr" style="--x:64.2">2025</span><span class="yr" style="--x:83">2026</span>
+      </div>
+      <div class="spec-key" aria-hidden="true">
+        <span style="--c:var(--nm486)">Roles</span>
+        <span style="--c:var(--nm589)">PIE — flagship</span>
+      </div>
+      <figcaption class="spec-caption">Career timeline (year)</figcaption>
+    </figure>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Years shipping</div><div class="v">4+</div><div class="s">since Oct 2021</div></div>
+    <div class="stat"><div class="k">PIE latest tag</div><div class="v">v0.5.0</div><div class="s">signed · Homebrew tap</div></div>
+    <div class="stat"><div class="k">Platforms in production</div><div class="v">5</div><div class="s">e-commerce · edtech · maritime · health</div></div>
+    <div class="stat"><div class="k">Audio leaving the device</div><div class="v">0%</div><div class="s">whisper.cpp, on-device</div></div>
+  </div>
+</section>
+
+<section id="work">
+  <h2>Where the signal shipped</h2>
+  <p class="lede">Four roles, four industries, one direction: from maintaining frontends to
+  owning them, and from consuming APIs to building the platforms around them.</p>
+
+  <article class="job eline" id="job-forchunex" style="--c:var(--nm656)">
+    <div class="job-head">
+      <div class="co">Forchunex IT Consultancy</div>
+      <div class="role">Software Engineer</div>
+      <div class="dates">Dec 2025 — present · remote</div>
+    </div>
+    <div class="job-body">
       <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li>Building e-commerce platforms for Magrabi and Doctor M, two of Saudi Arabia's leading optical and healthcare retail brands.</li>
+        <li>Turborepo monorepo: Next.js App Router, strict TypeScript, Tailwind CSS, Zustand.</li>
+        <li>AI-assisted engineering workflow (Claude Code, Cursor) as a daily practice.</li>
+      </ul>
+      <div class="tags"><span>Next.js</span><span>TypeScript</span><span>Turborepo</span><span>E-commerce</span></div>
+      <div class="mats">
+        <a class="mat" style="--c:var(--nm656)" href="https://www.magrabi.com/sa-en/" target="_blank" rel="noopener">
+          <img src="assets/magrabi.jpg" alt="Magrabi e-commerce storefront, sa-en" loading="lazy" width="1400" height="875">
+          <span class="cap"><b>Magrabi</b><span>Live · sa-en</span></span>
+        </a>
+        <a class="mat" style="--c:var(--nm656)" href="https://www.doctor-m.com/sa-en/" target="_blank" rel="noopener">
+          <img src="assets/doctorm.jpg" alt="Doctor M e-commerce storefront, sa-en" loading="lazy" width="1400" height="875">
+          <span class="cap"><b>Doctor M</b><span>Live · sa-en</span></span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <article class="job eline" id="job-infyni" style="--c:var(--nm546)">
+    <div class="job-head">
+      <div class="co">Infyni</div>
+      <div class="role">Software Development Engineer</div>
+      <div class="dates">Jan 2024 — Nov 2025 · Gurugram</div>
+    </div>
+    <div class="job-body">
+      <ul>
+        <li>Built and optimized the live-learning platform's web experience in React and Next.js.</li>
+        <li>Role-based dashboards for students, instructors, and business admins; interactive live-class flows.</li>
+        <li>Mentored teammates on hooks, component architecture, and modern React practice.</li>
+      </ul>
+      <div class="tags"><span>Next.js</span><span>React</span><span>TypeScript</span><span>EdTech</span></div>
+      <div class="mats">
+        <a class="mat single" style="--c:var(--nm546)" href="https://www.infyni.com" target="_blank" rel="noopener">
+          <img src="assets/infyni.jpg" alt="Infyni live-learning platform homepage" loading="lazy" width="1400" height="875">
+          <span class="cap"><b>Infyni</b><span>Live · infyni.com</span></span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <article class="job eline" id="job-ocean" style="--c:var(--nm486)">
+    <div class="job-head">
+      <div class="co">theoceann.com</div>
+      <div class="role">Frontend Developer</div>
+      <div class="dates">Apr 2023 — Nov 2023 · Noida</div>
+    </div>
+    <div class="job-body">
+      <ul>
+        <li>Upgraded the maritime platform to React 18; migrated class components to functions with the team.</li>
+        <li>Implemented real-time chat over WebSockets; notifications and logging with Firebase; JWT authentication.</li>
+        <li>Managed the Jenkins CI/CD pipeline for development and deployment.</li>
+      </ul>
+      <div class="tags"><span>React 18</span><span>WebSockets</span><span>Firebase</span><span>Jenkins</span></div>
+    </div>
+  </article>
+
+  <article class="job eline" id="job-zenex" style="--c:var(--nm436)">
+    <div class="job-head">
+      <div class="co">Zenex Animal Health</div>
+      <div class="role">Frontend Developer</div>
+      <div class="dates">Oct 2021 — Mar 2023 · remote</div>
+    </div>
+    <div class="job-body">
+      <ul>
+        <li>Enhanced and maintained the employee reporting system's frontend in React.</li>
+        <li>Integrated against backend APIs and databases across the reporting workflow.</li>
+      </ul>
+      <div class="tags"><span>React</span><span>REST APIs</span></div>
+    </div>
+  </article>
+</section>
+
+<section id="pie">
+  <div class="doublet" aria-hidden="true"></div>
+  <h2>The doubled line — PIE</h2>
+  <div class="pie-grid">
+    <div>
+      <p class="measure">Personal Intent Engine: press a global hotkey in any application, speak
+      naturally, and a structured, production-ready prompt lands at your cursor. Transcription,
+      correction, and intent extraction all happen on this side of the network. Audio never
+      leaves the machine.</p>
+      <ul class="pie-facts">
+        <li><b>Stack</b><span>Rust · Tauri 2 · Svelte 5. Ships as a desktop app, a CLI, and a Rust crate.</span></li>
+        <li><b>Speech</b><span>whisper.cpp with Metal acceleration, gated by Silero voice-activity detection.</span></li>
+        <li><b>Corrector</b><span>Layered pronunciation correction for developer jargon ("next jazz" → Next.js): built-in dictionary, personal vocabulary, and an opt-in AI pass, with a context-gated phonetic tier so ordinary words are never falsely corrected.</span></li>
+        <li><b>Testing</b><span>Integration suite with a mock-LLM harness, VAD tests, and a corrector-pipeline suite; intent-extraction results documented in-repo.</span></li>
+        <li><b>Release</b><span>Signed builds, one-line installer, Homebrew tap, local SQLite history.</span></li>
+      </ul>
+      <div class="pie-links">
+        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishek-data/personal-intent-engine" target="_blank" rel="noopener">GitHub<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishek-data/personal-intent-engine/releases" target="_blank" rel="noopener">Releases · v0.5.0<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishek-data/homebrew-pie" target="_blank" rel="noopener">Homebrew tap<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+      </div>
+    </div>
+    <div>
+      <div class="pipeline">
+        <div class="pl-title">Signal path</div>
+        <div class="pipe">
+          <div class="stage"><b>Spoken thought</b><span>global hotkey, any app</span></div>
+          <div class="ondevice"><i>On-device</i>
+            <div class="stage"><b>Silero VAD</b><span>speech boundaries</span></div>
+            <div class="stage"><b>whisper.cpp</b><span>Metal-accelerated transcription</span></div>
+            <div class="stage"><b>Pronunciation corrector</b><span>dictionary → your vocabulary → phonetic tier</span></div>
+            <div class="stage"><b>Intent engine</b><span>objective · constraints · mode</span></div>
+          </div>
+          <div class="stage"><b>Structured prompt</b><span>pasted at cursor, or routed to an LLM</span></div>
+        </div>
+      </div>
+      <div class="install">
+        <div class="head"><b>Install — macOS (Apple Silicon)</b><button type="button" id="copybtn" aria-label="Copy install command">Copy</button></div>
+        <code id="installcmd">curl -fsSL https://raw.githubusercontent.com/abhishek-data/personal-intent-engine/main/scripts/install.sh | bash</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Also emitting</h2>
+  <p class="lede">Personal projects that stay in active development.</p>
+  <div class="proj-grid">
+    <a class="proj" href="https://github.com/abhishek-data/Devvault" target="_blank" rel="noopener">
+      <span class="strip" aria-hidden="true"><i style="--x:18;--c:var(--nm615)"></i><i style="--x:24;--c:var(--nm615)"></i><i style="--x:61;--c:var(--nm546)"></i><i style="--x:83;--c:var(--nm486)"></i></span>
+      <h3>DevVault</h3>
+      <span class="meta">Next.js 14 · TipTap · IndexedDB · GitHub sync</span>
+      <p>Local-first developer knowledge base: block editor, offline storage, fuzzy search with
+      block-level deep links, and GitHub backup with three-way conflict resolution.</p>
+      <span class="go">Repository<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
+    </a>
+    <a class="proj" href="https://github.com/abhishek-data/voicenote" target="_blank" rel="noopener">
+      <span class="strip" aria-hidden="true"><i style="--x:14;--c:var(--nm436)"></i><i style="--x:39;--c:var(--nm486)"></i><i style="--x:44;--c:var(--nm486)"></i><i style="--x:78;--c:var(--nm405)"></i></span>
+      <h3>VoiceNote AI</h3>
+      <span class="meta">Turborepo · Next.js · Expo · Gemini</span>
+      <p>Cross-platform voice notes: web and mobile apps sharing one typed client. Records speech,
+      transcribes with Gemini, and refines it into original, cleaned, and professional registers.</p>
+      <span class="go">Repository<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
+    </a>
+  </div>
+</section>
+
+<section id="skills">
+  <h2>Line inventory</h2>
+  <p class="lede">State is carried in the line, not the label. What's still calibrating is marked
+  as calibrating. Ask me about any line in an interview.</p>
+  <div class="legend" role="img" aria-label="Legend: full solid line means professional; half-height line means working knowledge; dashed line means in calibration (learning)">
+    <div><span class="spec-mark full" style="--mc:var(--nm546)"></span>Professional</div>
+    <div><span class="spec-mark half" style="--mc:var(--nm486)"></span>Working knowledge</div>
+    <div><span class="spec-mark dash" style="--mc:var(--nm589)"></span>In calibration</div>
+  </div>
+  <div class="skill-cols">
+    <div class="skill-col">
+      <h3>Frontend</h3>
+      <ul>
+        <li><span class="spec-mark full" style="--mc:var(--nm546)"></span>React</li>
+        <li><span class="spec-mark full" style="--mc:var(--nm546)"></span>Next.js</li>
+        <li><span class="spec-mark full" style="--mc:var(--nm546)"></span>TypeScript</li>
+        <li><span class="spec-mark full" style="--mc:var(--nm546)"></span>JavaScript</li>
+        <li><span class="spec-mark full" style="--mc:var(--nm546)"></span>Tailwind CSS</li>
+        <li><span class="spec-mark full" style="--mc:var(--nm546)"></span>Web performance</li>
       </ul>
     </div>
-  </nav>
-
-  <section class="hero" id="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge"><span class="dot"></span> Open to opportunities</div>
-        <h1>Abhishek Kumar</h1>
-        <div class="terminal-line">
-          <span class="prompt">~/abhishek $</span>
-          <span class="cmd"> whoami</span>
-          <span class="cursor"></span>
-        </div>
-        <h1 style="font-size: clamp(24px, 3.5vw, 36px); margin-top: -8px; margin-bottom: 24px;">
-          <span class="accent">Software Engineer — Frontend & AI Developer Tools</span>
-        </h1>
-        <p class="subtitle">
-          4+ years building production web applications with React, Next.js, and TypeScript.
-          Currently shipping e-commerce platforms for Magrabi and Doctor M — and building
-          PIE, a Rust desktop app that turns speech into structured AI prompts, fully on-device.
-        </p>
-        <div class="hero-links">
-          <a href="#experience" class="btn btn-primary">View Experience</a>
-          <a href="https://github.com/abhishek-data" target="_blank" class="btn btn-secondary">GitHub →</a>
-          <a href="https://linkedin.com/in/abhishek1915" target="_blank" class="btn btn-secondary">LinkedIn →</a>
-        </div>
-      </div>
+    <div class="skill-col">
+      <h3>Systems &amp; tooling</h3>
+      <ul>
+        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>Rust<small>shipped in PIE</small></li>
+        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>Tauri 2<small>shipped in PIE</small></li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>SQLite</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Docker</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Jenkins · CI/CD</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>GitHub Actions</li>
+      </ul>
     </div>
-  </section>
-
-  <section id="about">
-    <div class="container">
-      <div class="section-label">About</div>
-      <div class="section-title">What I do</div>
-      <div style="max-width: 680px; color: var(--muted); font-size: 16px; line-height: 1.8;">
-        <p>I'm a software engineer with a frontend foundation — 4+ years of professional React, Next.js, and TypeScript across e-commerce, edtech, maritime, and healthcare products. Right now I build e-commerce platforms for <a href="https://www.magrabi.com/sa-en/" target="_blank" style="color: var(--accent);">Magrabi</a> and <a href="https://www.doctor-m.com/sa-en/" target="_blank" style="color: var(--accent);">Doctor M</a> at Forchunex IT Consultancy.</p>
-        <br>
-        <p>Outside work, I build local-first, AI-powered developer tools. My main project is <a href="https://github.com/abhishek-data/personal-intent-engine" target="_blank" style="color: var(--accent);">PIE</a> — a Rust + Tauri desktop app that transcribes speech entirely on-device (whisper.cpp + Silero VAD), extracts intent, and delivers a structured prompt to your cursor in any application. Building it has meant real systems work: audio pipelines, a layered pronunciation corrector, integration tests against a mock LLM, signed releases, and a Homebrew tap. AI coding tools like Claude Code are part of my daily workflow; I'm currently going deeper into retrieval and agent architectures by building, not just reading.</p>
-      </div>
+    <div class="skill-col">
+      <h3>Backend &amp; data</h3>
+      <ul>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Node.js · Express</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>REST APIs · auth</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>WebSockets</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>MongoDB · MySQL</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>PostgreSQL · Prisma</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Python</li>
+      </ul>
     </div>
-  </section>
-
-  <section id="experience" style="background: var(--bg-elevated);">
-    <div class="container">
-      <div class="section-label">Experience</div>
-      <div class="section-title">Where I've worked</div>
-      <div class="timeline">
-        <div class="timeline-item current">
-          <div class="timeline-header">
-            <div class="timeline-role">Software Engineer</div>
-            <div class="timeline-date">Dec 2025 — Present</div>
-          </div>
-          <div class="timeline-company">FORCHUNEX IT CONSULTANCY · Full-time · Remote</div>
-          <ul class="timeline-desc">
-            <li>Building e-commerce platforms for Magrabi and Doctor M (Saudi Arabia's leading optical & healthcare retail brands)</li>
-            <li>Working in a Turborepo monorepo: Next.js App Router, strict TypeScript, Tailwind CSS, Zustand</li>
-            <li>Using AI-assisted development (Claude Code, Cursor) as part of the daily engineering workflow</li>
-          </ul>
-          <div class="timeline-tags">
-            <span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Turborepo</span>
-            <span class="tag">E-commerce</span><span class="tag">Tailwind</span>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-header">
-            <div class="timeline-role">Software Development Engineer</div>
-            <div class="timeline-date">Jan 2024 — Nov 2025</div>
-          </div>
-          <div class="timeline-company">Infyni · Full-time · Gurugram</div>
-          <ul class="timeline-desc">
-            <li>Led development and optimization of scalable web applications using React.js and Next.js</li>
-            <li>Designed and maintained role-based access control systems for 100,000+ users</li>
-            <li>Enhanced engagement with seamless live video experiences and interactive sessions</li>
-            <li>Mentored team members on modern React best practices, hooks, and reusable architecture</li>
-          </ul>
-          <div class="timeline-tags">
-            <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">RBAC</span>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-header">
-            <div class="timeline-role">Software Developer</div>
-            <div class="timeline-date">Apr 2023 — Nov 2023</div>
-          </div>
-          <div class="timeline-company">theoceann.com · Full-time · Noida</div>
-          <ul class="timeline-desc">
-            <li>Migrated React codebase from class to functional components, upgraded to React 18</li>
-            <li>Implemented live chat using web sockets for real-time communication</li>
-            <li>Managed Jenkins CI/CD pipeline for improved development and deployment</li>
-          </ul>
-          <div class="timeline-tags">
-            <span class="tag">React 18</span><span class="tag">WebSockets</span><span class="tag">Jenkins</span>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-header">
-            <div class="timeline-role">Software Developer</div>
-            <div class="timeline-date">Oct 2021 — Mar 2023</div>
-          </div>
-          <div class="timeline-company">Zenex Animal Health India · Remote</div>
-          <ul class="timeline-desc">
-            <li>Enhanced and maintained Employee Reporting System frontend using React</li>
-            <li>Ensured seamless integration with backend APIs and databases</li>
-          </ul>
-          <div class="timeline-tags">
-            <span class="tag">React</span><span class="tag">REST APIs</span>
-          </div>
-        </div>
-      </div>
+    <div class="skill-col">
+      <h3>AI engineering</h3>
+      <ul>
+        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>LLM APIs<small>Claude · GPT · Gemini</small></li>
+        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>Prompt &amp; intent pipelines</li>
+        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>On-device speech<small>whisper.cpp · VAD</small></li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Structured outputs</li>
+        <li><span class="spec-mark dash" style="--mc:var(--nm589)"></span>RAG &amp; embeddings</li>
+        <li><span class="spec-mark dash" style="--mc:var(--nm589)"></span>Agents &amp; tool calling</li>
+      </ul>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="skills">
-    <div class="container">
-      <div class="section-label">Skills</div>
-      <div class="section-title">What I work with</div>
-      <div class="skills-grid">
-        <div class="skill-card">
-          <h3><span class="icon">🤖</span> AI Engineering</h3>
-          <div class="skill-list">
-            <span class="skill-item">LLM APIs (Claude, GPT, Gemini)</span>
-            <span class="skill-item">Prompt & Intent Pipelines</span>
-            <span class="skill-item">On-Device Speech (whisper.cpp, Silero VAD)</span>
-            <span class="skill-item">Structured Outputs</span>
-            <span class="skill-item">Learning: RAG & Agents</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <h3><span class="icon">⚡</span> Frontend</h3>
-          <div class="skill-list">
-            <span class="skill-item">React.js</span><span class="skill-item">Next.js</span>
-            <span class="skill-item">TypeScript</span><span class="skill-item">Redux</span>
-            <span class="skill-item">Tailwind CSS</span><span class="skill-item">Responsive Design</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <h3><span class="icon">🔧</span> Backend & DevOps</h3>
-          <div class="skill-list">
-            <span class="skill-item">Node.js</span><span class="skill-item">Express.js</span>
-            <span class="skill-item">Python</span>
-            <span class="skill-item">PostgreSQL</span><span class="skill-item">MongoDB</span>
-            <span class="skill-item">Docker</span><span class="skill-item">CI/CD (Jenkins, GitHub Actions)</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <h3><span class="icon">🦀</span> Systems & Tooling</h3>
-          <div class="skill-list">
-            <span class="skill-item">Rust</span><span class="skill-item">Tauri 2</span>
-            <span class="skill-item">SQLite</span><span class="skill-item">Release Signing</span>
-            <span class="skill-item">Homebrew Packaging</span>
-            <span class="skill-item">Claude Code · Cursor · Copilot</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="contact">
+  <h2>Open channel</h2>
+  <p class="lede">Hiring, collaborating, or curious about PIE: the channel is open.</p>
+  <div class="chan-grid">
+    <a class="chan" style="--c:var(--nm589)" href="mailto:abhishekkr1915@gmail.com"><b>Email</b><span>abhishekkr1915@gmail.com</span></a>
+    <a class="chan" style="--c:var(--nm486)" href="https://www.linkedin.com/in/abhishek1915/" target="_blank" rel="noopener"><b>LinkedIn</b><span>in/abhishek1915</span></a>
+    <a class="chan" style="--c:var(--nm546)" href="https://github.com/abhishek-data" target="_blank" rel="noopener"><b>GitHub</b><span>abhishek-data</span></a>
+    <a class="chan" style="--c:var(--nm405)" href="https://twitter.com/abhishekkr1915" target="_blank" rel="noopener"><b>X</b><span>abhishekkr1915</span></a>
+  </div>
+</section>
 
-  <section id="projects" style="background: var(--bg-elevated);">
-    <div class="container">
-      <div class="section-label">Projects</div>
-      <div class="section-title">What I've built</div>
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="metric" style="font-size: 24px;">PIE</div>
-          <h3>Personal Intent Engine</h3>
-          <p>Rust + Tauri desktop app: press a hotkey anywhere, speak, and get a structured AI prompt at your cursor. 100% local transcription (whisper.cpp + Silero VAD), intent extraction, and a pronunciation corrector that learns your technical vocabulary. Ships as app, CLI, and crate — signed releases, Homebrew tap, mock-LLM integration tests.</p>
-          <p style="margin-top: 12px;"><a href="https://github.com/abhishek-data/personal-intent-engine" target="_blank" style="color: var(--accent); font-family: var(--font-mono); font-size: 13px;">GitHub →</a></p>
-        </div>
-        <div class="project-card">
-          <div class="metric" style="font-size: 24px;">DevVault</div>
-          <h3>Local-First Knowledge Base</h3>
-          <p>Developer notes app with a TipTap block editor, IndexedDB storage (works fully offline), fuzzy search with block-level deep links, and GitHub sync with three-way conflict resolution. Next.js 14, strict TypeScript, Zustand.</p>
-          <p style="margin-top: 12px;"><a href="https://github.com/abhishek-data/Devvault" target="_blank" style="color: var(--accent); font-family: var(--font-mono); font-size: 13px;">GitHub →</a></p>
-        </div>
-        <div class="project-card">
-          <div class="metric" style="font-size: 24px;">VoiceNote</div>
-          <h3>Cross-Platform Voice Notes</h3>
-          <p>Turborepo monorepo with a Next.js web app and Expo mobile app sharing one typed API client. Records speech, transcribes with Gemini, and refines the text into original, cleaned, and professional versions.</p>
-          <p style="margin-top: 12px;"><a href="https://github.com/abhishek-data/voicenote" target="_blank" style="color: var(--accent); font-family: var(--font-mono); font-size: 13px;">GitHub →</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
+</main>
 
-  <section id="contact">
-    <div class="container">
-      <div class="section-label">Contact</div>
-      <div class="section-title">Let's connect</div>
-      <div class="contact-grid">
-        <a href="mailto:abhishekkr1915@gmail.com" class="contact-card">
-          <div class="icon">✉</div>
-          <div><div class="label">Email</div><div class="value">abhishekkr1915@gmail.com</div></div>
-        </a>
-        <a href="https://linkedin.com/in/abhishek1915" target="_blank" class="contact-card">
-          <div class="icon">in</div>
-          <div><div class="label">LinkedIn</div><div class="value">abhishek1915</div></div>
-        </a>
-        <a href="https://github.com/abhishek-data" target="_blank" class="contact-card">
-          <div class="icon">⌨</div>
-          <div><div class="label">GitHub</div><div class="value">abhishek-data</div></div>
-        </a>
+<footer>
+  <span class="caps-dim">© 2026 Abhishek Kumar · every line accounted for</span>
+  <span class="ministrip" aria-hidden="true">
+    <i style="--c:var(--nm405)"></i><i style="--c:var(--nm436)"></i><i style="--c:var(--nm486)"></i>
+    <i style="--c:var(--nm546)"></i><i style="--c:var(--nm589)"></i><i style="--c:var(--nm615)"></i><i style="--c:var(--nm656)"></i>
+  </span>
+</footer>
 
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <p style="font-family: var(--font-mono);">© 2026 Abhishek Kumar <span style="color: var(--muted);">// shipping ideas into reality</span></p>
-    </div>
-  </footer>
+<script>
+(function(){
+  var plate=document.getElementById('specplate');
+  if(plate){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){ plate.classList.remove('willsettle'); }
+    else{
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ plate.classList.add('settled'); io.disconnect(); } });
+      },{threshold:.35});
+      io.observe(plate);
+    }
+  }
+  var links=document.querySelectorAll('.rail nav a');
+  if(links.length){
+    var map={};
+    links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+    var so=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){ a.removeAttribute('aria-current'); });
+          var a=map[e.target.id]; if(a) a.setAttribute('aria-current','true');
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px'});
+    document.querySelectorAll('main section').forEach(function(s){ so.observe(s); });
+  }
+  var btn=document.getElementById('copybtn');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var t=document.getElementById('installcmd').textContent.trim();
+      navigator.clipboard.writeText(t).then(function(){
+        btn.textContent='Copied'; setTimeout(function(){ btn.textContent='Copy'; },1800);
+      },function(){ btn.textContent='Select & copy'; });
+    });
+  }
+})();
+</script>
 </body>
 </html>
