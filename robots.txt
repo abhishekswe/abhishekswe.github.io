@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abhishekswe.github.io/sitemap.xml
