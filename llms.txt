@@ -1,0 +1,18 @@
+# Abhishek Kumar (abhishekswe)
+
+> Software engineer in Gurugram, India. 4+ years of React, Next.js and TypeScript in production. Currently a Software Engineer at Forchunex IT Consultancy, working on the Next.js e-commerce storefronts for Magrabi and Doctor M. Previously SDE at Infyni (live-learning platform). Maintainer of agent-fastpath, an open-source MCP server for AI coding agents.
+
+Handle: abhishekswe (GitHub, X). Not related to WWE or wrestling.
+
+## Projects
+
+- [agent-fastpath](https://abhishekswe.github.io/agent-fastpath/): MCP server that gives coding agents (Claude Code, Codex, Cursor) quick checks before they act — ship gates on CI logs, risk checks on shell commands, file triage, browser verification. TypeScript, MIT. On [npm](https://www.npmjs.com/package/agent-fastpath), [MCP Market](https://mcpmarket.com/server/agent-fastpath) and [Glama](https://glama.ai/mcp/servers/abhishekswe/agent-fastpath).
+- [PIE](https://github.com/abhishekswe/personal-intent-engine): side project, a macOS app that turns speech into a structured prompt with local transcription. Built while learning Rust and Tauri.
+- [DevVault](https://github.com/abhishekswe/Devvault): local-first developer notes app (Next.js, TipTap, IndexedDB, GitHub sync).
+
+## Links
+
+- [Portfolio](https://abhishekswe.github.io/)
+- [GitHub](https://github.com/abhishekswe)
+- [LinkedIn](https://www.linkedin.com/in/abhishekkr-swe/)
+- Email: abhishekkr1915@gmail.com

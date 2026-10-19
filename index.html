@@ -3,35 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhishek Kumar (abhishekswe) — Software Engineer · React, Next.js, Rust</title>
-<meta name="description" content="Abhishek Kumar (abhishekswe) — software engineer in Gurugram with 4+ years of React, Next.js & TypeScript in production, building local-first AI developer tools including PIE, an on-device voice→prompt engine in Rust.">
+<title>Abhishek Kumar (abhishekswe) — Software Engineer, React/Next.js</title>
+<meta name="description" content="Abhishek Kumar (abhishekswe), software engineer in Gurugram. 4+ years of React, Next.js and TypeScript in production. Maintains agent-fastpath, an open-source MCP server for coding agents.">
 <link rel="canonical" href="https://abhishekswe.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="profile">
+<meta property="og:site_name" content="Abhishek Kumar (abhishekswe)">
 <meta property="og:title" content="Abhishek Kumar (abhishekswe) — Software Engineer">
-<meta property="og:description" content="4+ years of React, Next.js & TypeScript in production. Building local-first AI developer tools in Rust.">
+<meta property="og:description" content="4+ years of React, Next.js and TypeScript in production. Maintainer of agent-fastpath, an open-source MCP server for coding agents.">
 <meta property="og:url" content="https://abhishekswe.github.io/">
-<meta property="og:image" content="https://avatars.githubusercontent.com/u/111110855">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://abhishekswe.github.io/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Abhishek Kumar (abhishekswe), software engineer. React, Next.js, TypeScript. Maintainer of agent-fastpath.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@abhishekswe">
 <meta name="twitter:title" content="Abhishek Kumar (abhishekswe) — Software Engineer">
-<meta name="twitter:description" content="4+ years of React, Next.js & TypeScript in production. Building local-first AI developer tools in Rust.">
-<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/111110855">
+<meta name="twitter:description" content="4+ years of React, Next.js and TypeScript in production. Maintainer of agent-fastpath, an open-source MCP server for coding agents.">
+<meta name="twitter:image" content="https://abhishekswe.github.io/assets/og.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Abhishek Kumar",
-  "alternateName": "abhishekswe",
-  "url": "https://abhishekswe.github.io/",
-  "image": "https://avatars.githubusercontent.com/u/111110855",
-  "jobTitle": "Software Engineer",
-  "worksFor": { "@type": "Organization", "name": "Forchunex IT Consultancy" },
-  "address": { "@type": "PostalAddress", "addressLocality": "Gurugram", "addressCountry": "IN" },
-  "email": "mailto:abhishekkr1915@gmail.com",
-  "knowsAbout": ["React", "Next.js", "TypeScript", "JavaScript", "Rust", "Tauri", "GraphQL", "AI engineering", "speech-to-text", "frontend development"],
-  "sameAs": [
-    "https://github.com/abhishekswe",
-    "https://www.linkedin.com/in/abhishekkr-swe/",
-    "https://x.com/abhishekswe"
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://abhishekswe.github.io/#person",
+      "name": "Abhishek Kumar",
+      "alternateName": "abhishekswe",
+      "url": "https://abhishekswe.github.io/",
+      "image": "https://avatars.githubusercontent.com/u/111110855",
+      "description": "Software engineer in Gurugram, India, working with React, Next.js and TypeScript. Maintainer of agent-fastpath, an open-source MCP server for AI coding agents.",
+      "jobTitle": "Software Engineer",
+      "worksFor": { "@type": "Organization", "name": "Forchunex IT Consultancy" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Gurugram", "addressCountry": "IN" },
+      "email": "mailto:abhishekkr1915@gmail.com",
+      "knowsAbout": ["React", "Next.js", "TypeScript", "JavaScript", "GraphQL", "frontend development", "e-commerce", "Model Context Protocol", "MCP servers", "AI coding agents", "LLM applications"],
+      "sameAs": [
+        "https://github.com/abhishekswe",
+        "https://www.linkedin.com/in/abhishekkr-swe/",
+        "https://x.com/abhishekswe",
+        "https://glama.ai/mcp/servers?query=author%3Aabhishekswe"
+      ]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://abhishekswe.github.io/agent-fastpath/#software",
+      "name": "agent-fastpath",
+      "description": "Open-source MCP server that gives coding agents such as Claude Code, Codex and Cursor quick checks before they act: ship gates on CI logs, risk checks on commands, file triage and browser verification.",
+      "url": "https://abhishekswe.github.io/agent-fastpath/",
+      "codeRepository": "https://github.com/abhishekswe/agent-fastpath",
+      "programmingLanguage": "TypeScript",
+      "runtimePlatform": "Node.js",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://abhishekswe.github.io/#person" },
+      "sameAs": [
+        "https://www.npmjs.com/package/agent-fastpath",
+        "https://mcpmarket.com/server/agent-fastpath",
+        "https://glama.ai/mcp/servers/abhishekswe/agent-fastpath"
+      ]
+    }
   ]
 }
 </script>
@@ -197,12 +228,14 @@
   .mat.single{max-width:640px}
 
   /* ---------- PIE ---------- */
-  #pie .doublet{height:12px;position:relative;margin-bottom:54px}
-  #pie .doublet::before,#pie .doublet::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--nm589);box-shadow:0 0 10px 1px rgba(255,216,74,.55)}
-  #pie .doublet::before{top:2px}
-  #pie .doublet::after{top:9px;opacity:.8}
+  .doublet{height:12px;position:relative;margin-bottom:54px}
+  .doublet::before,.doublet::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--nm589);box-shadow:0 0 10px 1px rgba(255,216,74,.55)}
+  .doublet::before{top:2px}
+  .doublet::after{top:9px;opacity:.8}
   .pie-grid{display:grid;grid-template-columns:5fr 4fr;gap:clamp(32px,4vw,80px);align-items:start}
   .pie-grid>div{min-width:0}
+  .feat-title{font-family:var(--font-c);font-weight:600;font-size:1.6rem;text-transform:uppercase;letter-spacing:.03em;margin-bottom:14px}
+  #projects .proj-grid{margin-top:64px}
   .pie-facts{list-style:none;margin-top:30px;border-top:1px solid var(--hairline)}
   .pie-facts li{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--hairline);color:var(--ink-dim)}
   .pie-facts b{font-weight:600;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);padding-top:3px}
@@ -303,10 +336,10 @@ calibrated rail; refuses the dark-hero-plus-project-cards portfolio default.
 OWN-WORLD: charcoal continuum ground with grain and faint banding; bone Barlow/Barlow Condensed
 caps ranked by tracking and ink; colour only as seven glowing 1px emission lines
 (405/436/486/546/589/615/656nm); dashed borders mark active state; images matted grayscale in graphite.
-STORY: a recruiter reads "4+ years shipped, frontend to Rust/AI, honest about what's still
-calibrating" and opens PIE or makes contact.
+STORY: a recruiter reads "4+ years shipped in React/Next.js, maintains a small open-source MCP
+server, honest about what's still calibrating" and opens agent-fastpath or makes contact.
 FIRST VIEWPORT: name in condensed bone caps left; right, the career spectrum plate — lines
-settling onto a 2021–2026 axis, PIE as the doubled sodium line; status + two actions beneath the copy.
+settling onto a 2021–2026 axis, agent-fastpath as the doubled sodium line; status + two actions beneath the copy.
 FORM: emission-line rail (operate-c-emission-line-rail), chosen from dealt challengers over
 grounded candidate 3; seed key 74d7fe19.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,
@@ -318,7 +351,7 @@ the verdict, and DESIGN.md.
   <a class="brand" href="#spectrum">Abhishek Kumar</a>
   <nav aria-label="Sections">
     <a href="#work">Work</a>
-    <a href="#pie">PIE</a>
+    <a href="#projects">Projects</a>
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -329,8 +362,7 @@ the verdict, and DESIGN.md.
   <nav aria-label="Sections">
     <a href="#spectrum" style="--c:var(--nm405)"><span class="t1">Spectrum</span><span class="t2">Overview</span></a>
     <a href="#work" style="--c:var(--nm486)"><span class="t1">Shipped</span><span class="t2">Experience</span></a>
-    <a href="#pie" style="--c:var(--nm589)"><span class="t1">PIE</span><span class="t2">Featured</span></a>
-    <a href="#projects" style="--c:var(--nm615)"><span class="t1">Projects</span><span class="t2">Active</span></a>
+    <a href="#projects" style="--c:var(--nm589)"><span class="t1">Projects</span><span class="t2">Open source</span></a>
     <a href="#skills" style="--c:var(--nm546)"><span class="t1">Inventory</span><span class="t2">Calibration</span></a>
     <a href="#contact" style="--c:var(--nm656)"><span class="t1">Channel</span><span class="t2">Contact</span></a>
   </nav>
@@ -343,9 +375,9 @@ the verdict, and DESIGN.md.
   <div class="hero-grid">
     <div class="hero-copy">
       <h1>Abhishek Kumar</h1>
-      <p class="measure">Software engineer. Four-plus years of React, Next.js, and TypeScript in
-      production, now also building local-first AI developer tools in Rust. Every line on this
-      plate is real, shipped work.</p>
+      <p class="measure">Software engineer in Gurugram. Four-plus years of React, Next.js, and
+      TypeScript in production, currently on large e-commerce storefronts. Outside work I build
+      small open-source tools for AI coding agents, most recently <span style="white-space:nowrap">agent-fastpath</span>.</p>
       <div class="status"><span class="dotline" aria-hidden="true"></span><span class="caps">Open to opportunities</span></div>
       <div class="hero-ctas">
         <a class="btn" style="--c:var(--nm546)" href="#work">View the work<span class="arrow"><svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h12M8.5 1 13 5l-4.5 4"/></svg></span></a>
@@ -360,15 +392,15 @@ the verdict, and DESIGN.md.
         <a class="sline" style="--x:45.3;--c:var(--nm546);--i:2;--w:1.5px" href="#job-infyni"><i></i><span class="tip">Infyni · SDE · 2024—25</span></a>
         <a class="sline" style="--x:81.5;--c:var(--nm656);--i:3;--w:1.5px" href="#job-forchunex"><i></i><span class="tip">Forchunex · Magrabi / Doctor M · now</span></a>
         <a class="sline" style="--x:86.5;--c:var(--nm615);--i:4" href="#projects"><i></i><span class="tip">DevVault · 2026</span></a>
-        <a class="sline" style="--x:89;--c:var(--nm436);--i:5" href="#projects"><i></i><span class="tip">VoiceNote AI · 2026</span></a>
-        <a class="sline pair" style="--x:94;--c:var(--nm589);--i:6;--w:1.5px" href="#pie"><i></i><i></i><span class="tip">PIE · v0.5.0 · the doubled line</span></a>
+        <a class="sline" style="--x:92;--c:var(--nm436);--i:5" href="#projects"><i></i><span class="tip">PIE · side project · 2026</span></a>
+        <a class="sline pair" style="--x:96;--c:var(--nm589);--i:6;--w:1.5px" href="#fastpath"><i></i><i></i><span class="tip">agent-fastpath · 2026</span></a>
       </div>
       <div class="spec-axis" aria-hidden="true">
         <span class="yr" style="--x:7.5">2022</span><span class="yr" style="--x:26.4">2023</span><span class="yr" style="--x:45.3">2024</span><span class="yr" style="--x:64.2">2025</span><span class="yr" style="--x:83">2026</span>
       </div>
       <div class="spec-key" aria-hidden="true">
         <span style="--c:var(--nm486)">Roles</span>
-        <span style="--c:var(--nm589)">PIE — flagship</span>
+        <span style="--c:var(--nm589)">Open source</span>
       </div>
       <figcaption class="spec-caption">Career timeline (year)</figcaption>
     </figure>
@@ -376,9 +408,9 @@ the verdict, and DESIGN.md.
 
   <div class="stats">
     <div class="stat"><div class="k">Years shipping</div><div class="v">4+</div><div class="s">since Oct 2021</div></div>
-    <div class="stat"><div class="k">PIE latest tag</div><div class="v">v0.5.0</div><div class="s">signed · Homebrew tap</div></div>
+    <div class="stat"><div class="k">agent-fastpath</div><div class="v">v0.2.0</div><div class="s">on npm · MIT</div></div>
     <div class="stat"><div class="k">Platforms in production</div><div class="v">5</div><div class="s">e-commerce · edtech · maritime · health</div></div>
-    <div class="stat"><div class="k">Audio leaving the device</div><div class="v">0%</div><div class="s">whisper.cpp, on-device</div></div>
+    <div class="stat"><div class="k">MCP directories</div><div class="v">2</div><div class="s">MCP Market · Glama</div></div>
   </div>
 </section>
 
@@ -473,68 +505,65 @@ the verdict, and DESIGN.md.
   </article>
 </section>
 
-<section id="pie">
+<section id="projects">
   <div class="doublet" aria-hidden="true"></div>
-  <h2>The doubled line — PIE</h2>
-  <div class="pie-grid">
+  <h2>Open source</h2>
+  <p class="lede">Small tools I build and maintain outside work.</p>
+  <div class="pie-grid" id="fastpath">
     <div>
-      <p class="measure">Personal Intent Engine: press a global hotkey in any application, speak
-      naturally, and a structured, production-ready prompt lands at your cursor. Transcription,
-      correction, and intent extraction all happen on this side of the network. Audio never
-      leaves the machine.</p>
+      <h3 class="feat-title">agent-fastpath</h3>
+      <p class="measure">An MCP server that gives coding agents like Claude Code, Codex, and Cursor
+      quick checks before they act: is this CI log ready to ship, is this command destructive,
+      which of these files matter for the task. Clear-cut cases are decided by plain rules; the
+      rest go to TypeSafe's Jev API. When it isn't sure, it says so and hands the decision back.</p>
       <ul class="pie-facts">
-        <li><b>Stack</b><span>Rust · Tauri 2 · Svelte 5. Ships as a desktop app, a CLI, and a Rust crate.</span></li>
-        <li><b>Speech</b><span>whisper.cpp with Metal acceleration, gated by Silero voice-activity detection.</span></li>
-        <li><b>Corrector</b><span>Layered pronunciation correction for developer jargon ("next jazz" → Next.js): built-in dictionary, personal vocabulary, and an opt-in AI pass, with a context-gated phonetic tier so ordinary words are never falsely corrected.</span></li>
-        <li><b>Testing</b><span>Integration suite with a mock-LLM harness, VAD tests, and a corrector-pipeline suite; intent-extraction results documented in-repo.</span></li>
-        <li><b>Release</b><span>Signed builds, one-line installer, Homebrew tap, local SQLite history.</span></li>
+        <li><b>Tools</b><span>Evaluate (ship gate, risk, ambiguity presets), file triage, a headless browser check, and an evidence trace for every answer.</span></li>
+        <li><b>Results</b><span>Every answer is accept, review, or escalate, so the agent knows when to ask you.</span></li>
+        <li><b>Context</b><span>Triage reads files on the server; in the repo benchmark the agent read 408 tokens instead of 35,256.</span></li>
+        <li><b>Stack</b><span>TypeScript, Node.js, Model Context Protocol SDK, Playwright. MIT licensed.</span></li>
+        <li><b>Listed</b><span>npm, MCP Market, and Glama. Setup guides for 12 MCP clients.</span></li>
       </ul>
       <div class="pie-links">
-        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishekswe/personal-intent-engine" target="_blank" rel="noopener">GitHub<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
-        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishekswe/personal-intent-engine/releases" target="_blank" rel="noopener">Releases · v0.5.0<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
-        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishekswe/homebrew-pie" target="_blank" rel="noopener">Homebrew tap<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+        <a class="btn" style="--c:var(--nm589)" href="https://abhishekswe.github.io/agent-fastpath/">Website<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+        <a class="btn" style="--c:var(--nm589)" href="https://github.com/abhishekswe/agent-fastpath" target="_blank" rel="noopener">GitHub<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+        <a class="btn" style="--c:var(--nm589)" href="https://www.npmjs.com/package/agent-fastpath" target="_blank" rel="noopener">npm<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
+        <a class="btn" style="--c:var(--nm589)" href="https://mcpmarket.com/server/agent-fastpath" target="_blank" rel="noopener">MCP Market<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a>
       </div>
     </div>
     <div>
       <div class="pipeline">
-        <div class="pl-title">Signal path</div>
+        <div class="pl-title">How a check is decided</div>
         <div class="pipe">
-          <div class="stage"><b>Spoken thought</b><span>global hotkey, any app</span></div>
-          <div class="ondevice"><i>On-device</i>
-            <div class="stage"><b>Silero VAD</b><span>speech boundaries</span></div>
-            <div class="stage"><b>whisper.cpp</b><span>Metal-accelerated transcription</span></div>
-            <div class="stage"><b>Pronunciation corrector</b><span>dictionary → your vocabulary → phonetic tier</span></div>
-            <div class="stage"><b>Intent engine</b><span>objective · constraints · mode</span></div>
-          </div>
-          <div class="stage"><b>Structured prompt</b><span>pasted at cursor, or routed to an LLM</span></div>
+          <div class="stage"><b>Agent asks</b><span>CI log, shell command, file list, or page claim</span></div>
+          <div class="stage"><b>Rules first</b><span>obvious cases decided in code, no API call</span></div>
+          <div class="stage"><b>Jev</b><span>typed answer with a probability</span></div>
+          <div class="stage"><b>Confidence gate</b><span>low or near-tied answers are not trusted</span></div>
+          <div class="stage"><b>accept · review · escalate</b><span>returned to the agent with evidence</span></div>
         </div>
       </div>
       <div class="install">
-        <div class="head"><b>Install — macOS (Apple Silicon)</b><button type="button" id="copybtn" aria-label="Copy install command">Copy</button></div>
-        <code id="installcmd">curl -fsSL https://raw.githubusercontent.com/abhishekswe/personal-intent-engine/main/scripts/install.sh | bash</code>
+        <div class="head"><b>Add to Claude Code</b><button type="button" id="copybtn" aria-label="Copy install command">Copy</button></div>
+        <code id="installcmd">claude mcp add agent-fastpath -s user -e TYPESAFE_API_KEY=&lt;key&gt; -- npx -y agent-fastpath start</code>
       </div>
     </div>
   </div>
-</section>
 
-<section id="projects">
-  <h2>Also emitting</h2>
-  <p class="lede">Personal projects that stay in active development.</p>
   <div class="proj-grid">
+    <a class="proj" href="https://github.com/abhishekswe/personal-intent-engine" target="_blank" rel="noopener">
+      <span class="strip" aria-hidden="true"><i style="--x:12;--c:var(--nm436)"></i><i style="--x:35;--c:var(--nm486)"></i><i style="--x:58;--c:var(--nm436)"></i><i style="--x:80;--c:var(--nm405)"></i></span>
+      <h3>PIE</h3>
+      <span class="meta">Side project · Tauri · whisper.cpp · macOS</span>
+      <p>Personal Intent Engine: a desktop app where you press a hotkey, speak, and get a
+      structured prompt at your cursor. Transcription runs locally. Built to learn Rust and
+      on-device speech.</p>
+      <span class="go">Repository<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
+    </a>
     <a class="proj" href="https://github.com/abhishekswe/Devvault" target="_blank" rel="noopener">
       <span class="strip" aria-hidden="true"><i style="--x:18;--c:var(--nm615)"></i><i style="--x:24;--c:var(--nm615)"></i><i style="--x:61;--c:var(--nm546)"></i><i style="--x:83;--c:var(--nm486)"></i></span>
       <h3>DevVault</h3>
       <span class="meta">Next.js 14 · TipTap · IndexedDB · GitHub sync</span>
-      <p>Local-first developer knowledge base: block editor, offline storage, fuzzy search with
-      block-level deep links, and GitHub backup with three-way conflict resolution.</p>
-      <span class="go">Repository<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
-    </a>
-    <a class="proj" href="https://github.com/abhishekswe/voicenote" target="_blank" rel="noopener">
-      <span class="strip" aria-hidden="true"><i style="--x:14;--c:var(--nm436)"></i><i style="--x:39;--c:var(--nm486)"></i><i style="--x:44;--c:var(--nm486)"></i><i style="--x:78;--c:var(--nm405)"></i></span>
-      <h3>VoiceNote AI</h3>
-      <span class="meta">Turborepo · Next.js · Expo · Gemini</span>
-      <p>Cross-platform voice notes: web and mobile apps sharing one typed client. Records speech,
-      transcribes with Gemini, and refines it into original, cleaned, and professional registers.</p>
+      <p>Local-first notes for developers: block editor, offline storage, fuzzy search, and GitHub
+      backup with conflict resolution.</p>
       <span class="go">Repository<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
     </a>
   </div>
@@ -564,12 +593,12 @@ the verdict, and DESIGN.md.
     <div class="skill-col">
       <h3>Systems &amp; tooling</h3>
       <ul>
-        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>Rust<small>shipped in PIE</small></li>
-        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>Tauri 2<small>shipped in PIE</small></li>
         <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>SQLite</li>
         <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Docker</li>
         <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Jenkins · CI/CD</li>
         <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>GitHub Actions</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Azure DevOps</li>
+        <li><span class="spec-mark dash" style="--mc:var(--nm589)"></span>Rust · Tauri<small>learning, via PIE</small></li>
       </ul>
     </div>
     <div class="skill-col">
@@ -586,12 +615,12 @@ the verdict, and DESIGN.md.
     <div class="skill-col">
       <h3>AI engineering</h3>
       <ul>
-        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>LLM APIs<small>Claude · GPT · Gemini</small></li>
-        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>Prompt &amp; intent pipelines</li>
-        <li><span class="spec-mark full" style="--mc:var(--nm589)"></span>On-device speech<small>whisper.cpp · VAD</small></li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>LLM APIs<small>Claude · GPT · Gemini</small></li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>MCP servers<small>agent-fastpath</small></li>
         <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>Structured outputs</li>
-        <li><span class="spec-mark dash" style="--mc:var(--nm589)"></span>RAG &amp; embeddings</li>
+        <li><span class="spec-mark half" style="--mc:var(--nm486)"></span>AI-assisted coding<small>Claude Code · Cursor</small></li>
         <li><span class="spec-mark dash" style="--mc:var(--nm589)"></span>Agents &amp; tool calling</li>
+        <li><span class="spec-mark dash" style="--mc:var(--nm589)"></span>LLM evaluation</li>
       </ul>
     </div>
   </div>
@@ -599,7 +628,7 @@ the verdict, and DESIGN.md.
 
 <section id="contact">
   <h2>Open channel</h2>
-  <p class="lede">Hiring, collaborating, or curious about PIE: the channel is open.</p>
+  <p class="lede">Hiring, collaborating, or curious about agent-fastpath: email is the fastest way to reach me.</p>
   <div class="chan-grid">
     <a class="chan" style="--c:var(--nm589)" href="mailto:abhishekkr1915@gmail.com"><b>Email</b><span>abhishekkr1915@gmail.com</span></a>
     <a class="chan" style="--c:var(--nm486)" href="https://www.linkedin.com/in/abhishekkr-swe/" target="_blank" rel="noopener"><b>LinkedIn</b><span>in/abhishekkr-swe</span></a>
