@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://abhishekswe.github.io/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Notes by Abhishek Kumar" href="/notes/feed.xml">
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Abhishek Kumar (abhishekswe)">
 <meta property="og:title" content="Abhishek Kumar (abhishekswe) — Software Engineer">
@@ -26,6 +27,22 @@
 {
   "@context": "https://schema.org",
   "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://abhishekswe.github.io/#website",
+      "url": "https://abhishekswe.github.io/",
+      "name": "Abhishek Kumar (abhishekswe)",
+      "publisher": { "@id": "https://abhishekswe.github.io/#person" }
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://abhishekswe.github.io/#profile",
+      "url": "https://abhishekswe.github.io/",
+      "name": "Abhishek Kumar — Software Engineer",
+      "isPartOf": { "@id": "https://abhishekswe.github.io/#website" },
+      "mainEntity": { "@id": "https://abhishekswe.github.io/#person" },
+      "dateModified": "2026-11-13"
+    },
     {
       "@type": "Person",
       "@id": "https://abhishekswe.github.io/#person",
@@ -352,6 +369,7 @@ the verdict, and DESIGN.md.
   <nav aria-label="Sections">
     <a href="#work">Work</a>
     <a href="#projects">Projects</a>
+    <a href="#notes">Notes</a>
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -363,6 +381,7 @@ the verdict, and DESIGN.md.
     <a href="#spectrum" style="--c:var(--nm405)"><span class="t1">Spectrum</span><span class="t2">Overview</span></a>
     <a href="#work" style="--c:var(--nm486)"><span class="t1">Shipped</span><span class="t2">Experience</span></a>
     <a href="#projects" style="--c:var(--nm589)"><span class="t1">Projects</span><span class="t2">Open source</span></a>
+    <a href="#notes" style="--c:var(--nm615)"><span class="t1">Notes</span><span class="t2">Writing</span></a>
     <a href="#skills" style="--c:var(--nm546)"><span class="t1">Inventory</span><span class="t2">Calibration</span></a>
     <a href="#contact" style="--c:var(--nm656)"><span class="t1">Channel</span><span class="t2">Contact</span></a>
   </nav>
@@ -549,7 +568,7 @@ the verdict, and DESIGN.md.
   </div>
 
   <div class="proj-grid">
-    <a class="proj" href="https://github.com/abhishekswe/personal-intent-engine" target="_blank" rel="noopener">
+    <a class="proj" id="pie" href="https://github.com/abhishekswe/personal-intent-engine" target="_blank" rel="noopener">
       <span class="strip" aria-hidden="true"><i style="--x:12;--c:var(--nm436)"></i><i style="--x:35;--c:var(--nm486)"></i><i style="--x:58;--c:var(--nm436)"></i><i style="--x:80;--c:var(--nm405)"></i></span>
       <h3>PIE</h3>
       <span class="meta">Side project · Tauri · whisper.cpp · macOS</span>
@@ -567,6 +586,30 @@ the verdict, and DESIGN.md.
       <span class="go">Repository<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
     </a>
   </div>
+</section>
+
+<section id="notes">
+  <h2>Notes</h2>
+  <p class="lede">Bugs and decisions worth writing down, each with a repro or the commit that fixed it.</p>
+  <div class="proj-grid">
+    <a class="proj" href="/notes/llm-ship-gate-fast-path/">
+      <span class="strip" aria-hidden="true"><i style="--x:22;--c:var(--nm589)"></i><i style="--x:26;--c:var(--nm589)"></i><i style="--x:70;--c:var(--nm656)"></i></span>
+      <h3>A regex fast path let an auth bypass through my LLM ship gate</h3>
+      <span class="meta">13 Nov 2026 · AI agents · Guardrails</span>
+      <p>A rule saw "Tests: 214 passed, 0 failed" and approved a diff that removed an auth check, without the
+      model reading it. Fast paths can say no early; saying yes early needs more.</p>
+      <span class="go">Read the note<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
+    </a>
+    <a class="proj" href="/notes/node-websocket-cdp-4mb-limit/">
+      <span class="strip" aria-hidden="true"><i style="--x:15;--c:var(--nm486)"></i><i style="--x:48;--c:var(--nm436)"></i><i style="--x:52;--c:var(--nm486)"></i></span>
+      <h3>Node's built-in WebSocket drops CDP replies over 4 MB</h3>
+      <span class="meta">13 Nov 2026 · Node.js · CDP</span>
+      <p>Chromium compresses DevTools frames, and Node's WebSocket refuses any message that inflates past 4 MB,
+      closing with 1006. Repro and the --remote-debugging-pipe fix.</p>
+      <span class="go">Read the note<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></span>
+    </a>
+  </div>
+  <div class="hero-ctas"><a class="btn" style="--c:var(--nm615)" href="/notes/">All notes<span class="arrow"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 10 10 1M3.5 1H10v6.5"/></svg></span></a></div>
 </section>
 
 <section id="skills">

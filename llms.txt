@@ -10,6 +10,12 @@ Handle: abhishekswe (GitHub, X). Not related to WWE or wrestling.
 - [PIE](https://github.com/abhishekswe/personal-intent-engine): side project, a macOS app that turns speech into a structured prompt with local transcription. Built while learning Rust and Tauri.
 - [DevVault](https://github.com/abhishekswe/Devvault): local-first developer notes app (Next.js, TipTap, IndexedDB, GitHub sync).
 
+## Notes
+
+- [A regex fast path let an auth bypass through my LLM ship gate](https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/): why deterministic fast paths in an LLM review gate may block early but must not approve when the input carries a diff.
+- [Node's built-in WebSocket drops CDP replies over 4 MB](https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/): undici's 4 MB decompressed-message cap closes Chrome DevTools connections with 1006; use --remote-debugging-pipe.
+- [All notes](https://abhishekswe.github.io/notes/) · [Atom feed](https://abhishekswe.github.io/notes/feed.xml)
+
 ## Links
 
 - [Portfolio](https://abhishekswe.github.io/)

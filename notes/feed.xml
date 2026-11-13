@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Notes by Abhishek Kumar</title>
+  <subtitle>Engineering notes: Node tooling, browser automation over CDP, and guardrails for AI coding agents.</subtitle>
+  <link href="https://abhishekswe.github.io/notes/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://abhishekswe.github.io/notes/" rel="alternate" type="text/html"/>
+  <id>https://abhishekswe.github.io/notes/</id>
+  <updated>2026-11-13T00:00:00Z</updated>
+  <author>
+    <name>Abhishek Kumar</name>
+    <uri>https://abhishekswe.github.io/</uri>
+  </author>
+  <entry>
+    <title>A regex fast path let an auth bypass through my LLM ship gate</title>
+    <link href="https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/" rel="alternate" type="text/html"/>
+    <id>https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/</id>
+    <published>2026-11-13T00:00:00Z</published>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>agent-fastpath decides obvious ship-gate cases with regexes before calling a model. One rule approved a diff that removed an auth check because it also said "Tests: 214 passed, 0 failed". What went wrong and the rule I use now.</summary>
+  </entry>
+  <entry>
+    <title>Node's built-in WebSocket drops CDP replies over 4 MB</title>
+    <link href="https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/" rel="alternate" type="text/html"/>
+    <id>https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/</id>
+    <published>2026-11-13T00:00:00Z</published>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <summary>Chromium's DevTools endpoint compresses WebSocket frames, and Node's built-in WebSocket (undici) drops any compressed message over 4 MB inflated, closing with 1006. Repro, numbers, and the --remote-debugging-pipe fix.</summary>
+  </entry>
+</feed>

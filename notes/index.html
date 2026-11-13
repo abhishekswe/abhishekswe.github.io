@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes — Abhishek Kumar (abhishekswe)</title>
+<meta name="description" content="Engineering notes by Abhishek Kumar: bugs worth writing down from building Node tooling, browser automation over CDP, and guardrails for AI coding agents.">
+<meta name="author" content="Abhishek Kumar">
+<link rel="canonical" href="https://abhishekswe.github.io/notes/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Notes by Abhishek Kumar" href="/notes/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Abhishek Kumar (abhishekswe)">
+<meta property="og:title" content="Notes — Abhishek Kumar">
+<meta property="og:description" content="Engineering notes: Node tooling, browser automation over CDP, and guardrails for AI coding agents.">
+<meta property="og:url" content="https://abhishekswe.github.io/notes/">
+<meta property="og:image" content="https://abhishekswe.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@abhishekswe">
+<meta name="twitter:image" content="https://abhishekswe.github.io/assets/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": "https://abhishekswe.github.io/notes/#blog",
+  "url": "https://abhishekswe.github.io/notes/",
+  "name": "Notes by Abhishek Kumar",
+  "author": { "@id": "https://abhishekswe.github.io/#person" },
+  "blogPost": [
+    { "@type": "BlogPosting", "headline": "Node's built-in WebSocket drops CDP replies over 4 MB", "url": "https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/", "datePublished": "2026-11-13" },
+    { "@type": "BlogPosting", "headline": "A regex fast path let an auth bypass through my LLM ship gate", "url": "https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/", "datePublished": "2026-11-13" }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/notes.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="/">Abhishek Kumar</a>
+  <nav aria-label="Site">
+    <a href="/#work">Work</a>
+    <a href="/#projects">Projects</a>
+    <a href="/notes/" aria-current="page">Notes</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main" class="wrap">
+  <div class="kicker"><span>Notes</span><a href="/notes/feed.xml">Atom feed</a></div>
+  <h1>Notes</h1>
+  <p class="dek eline" style="--c:var(--nm546)">Bugs and decisions worth writing down, from building Node tooling,
+  browser automation over CDP, and guardrails for AI coding agents. Each one has a repro or the commit
+  that fixed it.</p>
+
+  <ul class="notes-list">
+    <li><a href="/notes/llm-ship-gate-fast-path/" style="--c:var(--nm589)">
+      <span class="t">A regex fast path let an auth bypass through my LLM ship gate</span>
+      <span class="d">A rule saw "Tests: 214 passed, 0 failed" and approved a diff that removed an auth check, without
+      the model reading it. Fast paths can say no early; saying yes early needs more.</span>
+      <span class="m">13 Nov 2026 · AI agents · Guardrails</span>
+    </a></li>
+    <li><a href="/notes/node-websocket-cdp-4mb-limit/" style="--c:var(--nm486)">
+      <span class="t">Node's built-in WebSocket drops CDP replies over 4 MB</span>
+      <span class="d">Chromium compresses DevTools frames, and Node's WebSocket refuses any message that inflates past
+      4 MB, closing with 1006. Repro and the --remote-debugging-pipe fix.</span>
+      <span class="m">13 Nov 2026 · Node.js · CDP</span>
+    </a></li>
+  </ul>
+</main>
+
+<footer>
+  <span>© 2026 Abhishek Kumar</span>
+  <nav aria-label="Footer"><a href="/">Home</a><a href="/notes/feed.xml">Feed</a><a href="https://github.com/abhishekswe">GitHub</a><a href="https://www.linkedin.com/in/abhishekkr-swe/">LinkedIn</a></nav>
+</footer>
+</body>
+</html>

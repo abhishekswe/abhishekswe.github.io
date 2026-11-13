@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Node's built-in WebSocket closes with 1006 on CDP replies over 4 MB | Abhishek Kumar</title>
+<meta name="description" content="Chrome's DevTools endpoint compresses WebSocket frames, and Node's built-in WebSocket (undici) drops any compressed message over 4 MB inflated, closing with 1006. Repro, numbers, and the --remote-debugging-pipe fix.">
+<meta name="author" content="Abhishek Kumar">
+<link rel="canonical" href="https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Notes by Abhishek Kumar" href="/notes/feed.xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Abhishek Kumar (abhishekswe)">
+<meta property="og:title" content="Node's built-in WebSocket drops CDP replies over 4 MB">
+<meta property="og:description" content="Chromium compresses DevTools frames; Node's WebSocket refuses any message that inflates past 4 MB and closes with 1006. Repro and the --remote-debugging-pipe fix.">
+<meta property="og:url" content="https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/">
+<meta property="og:image" content="https://abhishekswe.github.io/assets/og.png">
+<meta property="article:published_time" content="2026-11-13">
+<meta property="article:author" content="https://abhishekswe.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@abhishekswe">
+<meta name="twitter:creator" content="@abhishekswe">
+<meta name="twitter:title" content="Node's built-in WebSocket drops CDP replies over 4 MB">
+<meta name="twitter:description" content="Chromium compresses DevTools frames; Node's WebSocket refuses any message that inflates past 4 MB and closes with 1006. Repro and the fix.">
+<meta name="twitter:image" content="https://abhishekswe.github.io/assets/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/#post",
+  "mainEntityOfPage": "https://abhishekswe.github.io/notes/node-websocket-cdp-4mb-limit/",
+  "headline": "Node's built-in WebSocket drops CDP replies over 4 MB",
+  "description": "Chrome's DevTools endpoint compresses WebSocket frames, and Node's built-in WebSocket drops any compressed message over 4 MB inflated, closing with 1006. Repro and the --remote-debugging-pipe fix.",
+  "datePublished": "2026-11-13",
+  "dateModified": "2026-11-13",
+  "image": "https://abhishekswe.github.io/assets/og.png",
+  "keywords": ["Node.js", "WebSocket", "undici", "Chrome DevTools Protocol", "CDP", "permessage-deflate", "remote-debugging-pipe"],
+  "author": { "@type": "Person", "@id": "https://abhishekswe.github.io/#person", "name": "Abhishek Kumar", "url": "https://abhishekswe.github.io/" },
+  "publisher": { "@id": "https://abhishekswe.github.io/#person" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/notes.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="/">Abhishek Kumar</a>
+  <nav aria-label="Site">
+    <a href="/#work">Work</a>
+    <a href="/#projects">Projects</a>
+    <a href="/notes/" aria-current="page">Notes</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main" class="wrap">
+  <div class="kicker"><a href="/notes/">Notes</a><span>13 Nov 2026</span><span>Node.js · CDP</span></div>
+  <h1>Node's built-in WebSocket drops CDP replies over 4 MB</h1>
+  <p class="dek eline" style="--c:var(--nm486)">Chromium's DevTools endpoint compresses its WebSocket frames, and Node's
+  built-in client refuses any compressed message that inflates past 4 MB. The connection closes with 1006 and
+  the reply is gone. Here is the repro, and the fix: <code>--remote-debugging-pipe</code>.</p>
+
+  <article class="post">
+    <h2>What I saw</h2>
+    <p>I was writing a small Node tool that drives Brave over the Chrome DevTools Protocol (CDP). To keep it
+    dependency-free I used the <code>WebSocket</code> that ships with Node. Small commands worked.
+    <code>DOMSnapshot.captureSnapshot</code> on real pages did not: the socket closed with code
+    <strong>1006</strong>, no reason, and the pending command never got a reply.</p>
+    <p>1006 means "closed abnormally", which usually points at a crashed browser or a network problem. Neither
+    was happening. The browser was fine, and the next connection worked.</p>
+
+    <h2>Why it happens</h2>
+    <p>Two defaults meet:</p>
+    <ol>
+      <li>Node's client offers the <code>permessage-deflate</code> extension and Chromium's DevTools server
+      accepts it, so large CDP replies arrive compressed. They are JSON, so they compress very well.</li>
+      <li>Node's <code>WebSocket</code> is implemented by undici, which limits how large a single compressed
+      message may get once inflated: <code>kDefaultMaxDecompressedSize = 4 * 1024 * 1024</code>. It is a guard
+      against compression bombs. Past the limit undici raises <code>MessageSizeExceededError</code> internally
+      and fails the connection.</li>
+    </ol>
+    <p>Your code never sees that error. It sees a <code>close</code> event with code 1006.</p>
+
+    <h2>Repro</h2>
+    <p>Start a headless browser with a debugging port (any Chromium works; I used Brave):</p>
+<pre><code>"/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" \
+  --headless=new --remote-debugging-port=9339 \
+  --user-data-dir=/tmp/cdp-test about:blank</code></pre>
+    <p>Then ask a page for strings of different sizes:</p>
+<pre><code>// probe.mjs (Node 22+, no dependencies)
+const list = await (await fetch('http://127.0.0.1:9339/json/list')).json();
+const url = list.find((t) =&gt; t.type === 'page').webSocketDebuggerUrl;
+
+function tryMB(mb) {
+  return new Promise((resolve) =&gt; {
+    const ws = new WebSocket(url);
+    ws.addEventListener('open', () =&gt; {
+      ws.send(JSON.stringify({
+        id: 1,
+        method: 'Runtime.evaluate',
+        params: { expression: `'x'.repeat(${mb} * 1024 * 1024)`, returnByValue: true },
+      }));
+    });
+    ws.addEventListener('message', () =&gt; {
+      console.log(mb, 'MB: reply received');
+      ws.close();
+    });
+    ws.addEventListener('close', (e) =&gt; {
+      console.log(mb, 'MB: close', e.code);
+      resolve();
+    });
+  });
+}
+
+for (const mb of [3, 3.9, 4.1, 5]) await tryMB(mb);</code></pre>
+    <p>On Node 24.15 (undici 7.24.4) against Chromium 156:</p>
+    <table>
+      <thead><tr><th>Reply size</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>3 MB</td><td class="ok">reply received, close 1000</td></tr>
+        <tr><td>3.9 MB</td><td class="ok">reply received, close 1000</td></tr>
+        <tr><td>4.1 MB</td><td class="bad">no reply, close 1006</td></tr>
+        <tr><td>5 MB</td><td class="bad">no reply, close 1006</td></tr>
+      </tbody>
+    </table>
+    <p>Logging <code>ws.extensions</code> after <code>open</code> prints
+    <code>permessage-deflate; client_max_window_bits=15</code>, so you can confirm compression is on.</p>
+
+    <h2>Where CDP replies get that big</h2>
+    <ul>
+      <li><code>DOMSnapshot.captureSnapshot</code>: a page with about 30,000 elements gave me an 11 MB snapshot.</li>
+      <li>Full-page <code>Page.captureScreenshot</code>, which comes back as base64.</li>
+      <li><code>Network.getResponseBody</code> for large scripts or JSON responses.</li>
+      <li><code>Runtime.evaluate</code> with <code>returnByValue</code> on large objects.</li>
+    </ul>
+
+    <h2>The fix: talk to the browser over a pipe</h2>
+    <p>Chromium can take CDP over a pair of file descriptors instead of a port. Start it with
+    <code>--remote-debugging-pipe</code> and it reads commands on fd 3 and writes replies on fd 4, each message
+    being JSON followed by a NUL byte. There is no compression, no message size limit, and no debugging port
+    open for other processes on the machine to reach.</p>
+<pre><code>import { spawn } from 'node:child_process';
+
+const browser = spawn(BROWSER_PATH, [
+  '--headless=new', '--remote-debugging-pipe', `--user-data-dir=${profileDir}`,
+], { stdio: ['ignore', 'ignore', 'ignore', 'pipe', 'pipe'] }); // fd 3 in, fd 4 out
+
+const toBrowser = browser.stdio[3];
+const fromBrowser = browser.stdio[4];
+
+let chunks = [];
+fromBrowser.on('data', (data) =&gt; {
+  let start = 0;
+  for (let end = data.indexOf(0); end !== -1; end = data.indexOf(0, start)) {
+    chunks.push(data.subarray(start, end));
+    onMessage(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+    chunks = [];
+    start = end + 1;
+  }
+  if (start &lt; data.length) chunks.push(data.subarray(start));
+});
+
+const send = (message) =&gt; toBrowser.write(JSON.stringify(message) + '\0');</code></pre>
+    <p>Two things to get right:</p>
+    <ul>
+      <li>A large reply arrives as many <code>data</code> chunks. Buffer until the NUL byte; don't parse each chunk.</li>
+      <li>The pipe connects you to the browser, not to a page. Open one with <code>Target.createTarget</code>,
+      attach with <code>Target.attachToTarget</code> and <code>flatten: true</code>, then send page commands
+      with the returned <code>sessionId</code>.</li>
+    </ul>
+    <p>The same test over the pipe: 5 MB and 11 MB replies both arrived in full.</p>
+
+    <h2>If you need a WebSocket</h2>
+    <p>The pipe only works for a browser you launch. To attach to one that is already running you need the
+    port. In that case use a client that lets you set the limit yourself, such as the <code>ws</code> package and
+    its <code>maxPayload</code> option, and keep large replies in mind.</p>
+
+    <div class="takeaway"><p>If a Node CDP client closes with 1006 only on big pages, check the reply size
+    before blaming the browser. Node's built-in WebSocket stops at 4 MB inflated.</p></div>
+
+    <div class="author">
+      <img src="https://avatars.githubusercontent.com/u/111110855?s=112" alt="" width="56" height="56" loading="lazy">
+      <p>I'm <a href="/">Abhishek Kumar</a>, a software engineer in Gurugram working on React and Next.js, and on
+      small open-source tools for AI coding agents such as
+      <a href="/agent-fastpath/">agent-fastpath</a>. More in <a href="/notes/">Notes</a>, or find me on
+      <a href="https://github.com/abhishekswe">GitHub</a>, <a href="https://www.linkedin.com/in/abhishekkr-swe/">LinkedIn</a>
+      and <a href="https://x.com/abhishekswe">X</a>.</p>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <span>© 2026 Abhishek Kumar</span>
+  <nav aria-label="Footer"><a href="/">Home</a><a href="/notes/">Notes</a><a href="/notes/feed.xml">Feed</a><a href="https://github.com/abhishekswe">GitHub</a></nav>
+</footer>
+</body>
+</html>

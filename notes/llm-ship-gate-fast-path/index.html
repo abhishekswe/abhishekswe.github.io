@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A regex fast path let an auth bypass through my LLM ship gate | Abhishek Kumar</title>
+<meta name="description" content="agent-fastpath decides obvious ship-gate cases with regexes before calling a model. One rule approved a diff that removed an auth check because it also said 'Tests: 214 passed, 0 failed'. What went wrong and the rule I use now.">
+<meta name="author" content="Abhishek Kumar">
+<link rel="canonical" href="https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/atom+xml" title="Notes by Abhishek Kumar" href="/notes/feed.xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Abhishek Kumar (abhishekswe)">
+<meta property="og:title" content="A regex fast path let an auth bypass through my LLM ship gate">
+<meta property="og:description" content="A rule saw 'Tests: 214 passed, 0 failed' and approved a diff that removed an auth check, without the model reading it. Fast paths can say no early; saying yes early needs more.">
+<meta property="og:url" content="https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/">
+<meta property="og:image" content="https://abhishekswe.github.io/assets/og.png">
+<meta property="article:published_time" content="2026-11-13">
+<meta property="article:author" content="https://abhishekswe.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@abhishekswe">
+<meta name="twitter:creator" content="@abhishekswe">
+<meta name="twitter:title" content="A regex fast path let an auth bypass through my LLM ship gate">
+<meta name="twitter:description" content="A rule saw 'Tests: 214 passed, 0 failed' and approved a diff that removed an auth check, without the model reading it.">
+<meta name="twitter:image" content="https://abhishekswe.github.io/assets/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/#post",
+  "mainEntityOfPage": "https://abhishekswe.github.io/notes/llm-ship-gate-fast-path/",
+  "headline": "A regex fast path let an auth bypass through my LLM ship gate",
+  "description": "agent-fastpath decides obvious ship-gate cases with regexes before calling a model. One rule approved a diff that removed an auth check because it also said 'Tests: 214 passed, 0 failed'.",
+  "datePublished": "2026-11-13",
+  "dateModified": "2026-11-13",
+  "image": "https://abhishekswe.github.io/assets/og.png",
+  "keywords": ["LLM evaluation", "AI coding agents", "MCP", "guardrails", "ship gate", "agent-fastpath"],
+  "about": { "@id": "https://abhishekswe.github.io/agent-fastpath/#software" },
+  "author": { "@type": "Person", "@id": "https://abhishekswe.github.io/#person", "name": "Abhishek Kumar", "url": "https://abhishekswe.github.io/" },
+  "publisher": { "@id": "https://abhishekswe.github.io/#person" }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/notes.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="/">Abhishek Kumar</a>
+  <nav aria-label="Site">
+    <a href="/#work">Work</a>
+    <a href="/#projects">Projects</a>
+    <a href="/notes/" aria-current="page">Notes</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main" class="wrap">
+  <div class="kicker"><a href="/notes/">Notes</a><span>13 Nov 2026</span><span>AI agents · Guardrails</span></div>
+  <h1>A regex fast path let an auth bypass through my LLM ship gate</h1>
+  <p class="dek eline" style="--c:var(--nm589)">agent-fastpath decides obvious ship-gate cases with plain rules before
+  it calls a model. One of those rules approved a diff that removed an auth check, because the same input also
+  said <code>Tests: 214 passed, 0 failed</code>. The model never saw it.</p>
+
+  <article class="post">
+    <h2>The setup</h2>
+    <p><a href="/agent-fastpath/">agent-fastpath</a> is an MCP server that coding agents (Claude Code, Codex,
+    Cursor) call before they act. Its ship gate takes CI output and answers <code>accept</code>,
+    <code>review</code> or <code>escalate</code>. Most answers come from a model, TypeSafe's Jev. Calling a
+    model for <code>Tests: 64 passed, 0 failed</code> is a waste, so a deterministic engine decides the obvious
+    cases first.</p>
+    <p>The first version of that engine was two checks:</p>
+<pre><code>const failure = SHIP_GATE_FAILURE_PATTERNS.find((p) =&gt; p.test(rawText));
+if (failure) return { decision: 'BLOCKED', confidence: 1.0 /* ... */ };
+
+const pass = SHIP_GATE_PASS_PATTERNS.find((p) =&gt; p.test(rawText));
+if (pass) return { decision: 'READY_TO_SHIP', confidence: 0.99 /* ... */ };
+
+// anything else goes to the model</code></pre>
+
+    <h2>The bad approval</h2>
+    <p>Agents don't send clean CI logs. They send what they have, which is often a diff with the test summary
+    at the end:</p>
+<pre><code>diff --git a/src/auth.ts b/src/auth.ts
+--- a/src/auth.ts
++++ b/src/auth.ts
+@@ -10,2 +10,2 @@
+-  if (!session) throw new UnauthorizedError();
++  // bypassed auth
+Tests: 214 passed, 0 failed</code></pre>
+    <p>No failure pattern matched. A pass pattern did. The engine returned <code>READY_TO_SHIP</code> at 0.99
+    and the model never read the diff.</p>
+    <p>Passing tests tell you the code does what the tests check. They say nothing about a deleted auth check
+    that no test covers, and that is exactly the kind of change the model was there to catch.</p>
+
+    <h2>The bad blocks</h2>
+    <p>The failure side was too loose in the other direction. This pattern:</p>
+<pre><code>/\b[1-9]\d*\s+(?:failed|failing|errors?)\b/i</code></pre>
+    <p>blocked ordinary sentences that happen to contain a number and the word "failed" or "error":</p>
+    <ul>
+      <li><code>Locks account after 2 failed login attempts</code></li>
+      <li><code>Retries up to 3 errors before timing out</code></li>
+      <li><code>Handles HTTP 500 errors gracefully</code></li>
+      <li><code>Returns 401 error when auth header is missing</code></li>
+    </ul>
+    <p>A TDD write-up like <code>Red phase: Tests: 1 failed. Green phase after fix: Tests: 5 passed, 0 failed</code>
+    was blocked too, for a failure that had already been fixed.</p>
+    <p>A false block is annoying but safe: the agent stops and asks. The false approval was the real bug.</p>
+
+    <h2>The fix</h2>
+<pre><code>const hasDiff = /\b(?:diff --git|@@ -\d+,\d+ \+\d+,\d+ @@|\bindex [0-9a-f]{7,}\.\.[0-9a-f]{7,})\b/.test(rawText);
+const failure = SHIP_GATE_FAILURE_PATTERNS.find((p) =&gt; p.test(rawText));
+const pass = SHIP_GATE_PASS_PATTERNS.find((p) =&gt; p.test(rawText));
+
+if (failure) {
+  const isTestCountFailure = /\b(?:test result:\s*FAILED|Tests:\s+[1-9]\d*\s+failed|[1-9]\d*\s+failed,\s*\d+\s+passed|[1-9]\d*\s+failing)\b/i.test(rawText);
+  const hasExplicitZeroFailed = /\b(?:0 failed|failed:\s*0)\b/i.test(rawText);
+  if (!(isTestCountFailure &amp;&amp; hasExplicitZeroFailed)) return BLOCKED;
+}
+
+if (pass &amp;&amp; !failure &amp;&amp; !hasDiff) return READY_TO_SHIP;
+
+// anything else goes to the model</code></pre>
+    <ul>
+      <li><strong>A diff disables the green fast path.</strong> If the input carries code, the model reads it.</li>
+      <li><strong>Failure patterns look like test-runner output</strong> (<code>Tests: 3 failed</code>,
+      <code>test result: FAILED</code>, <code>2 failed, 10 passed</code>, <code>4 failing</code>), not any
+      number followed by "failed".</li>
+      <li><strong>Mixed signals go to the model.</strong> A "1 failed" next to a "0 failed" is a story about a
+      fix, not a verdict.</li>
+    </ul>
+    <p>Running the old and the new engine on the inputs above:</p>
+    <table>
+      <thead><tr><th>Input</th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td>Auth-bypass diff + "214 passed, 0 failed"</td><td class="bad">READY_TO_SHIP</td><td class="ok">sent to model</td></tr>
+        <tr><td>The four ordinary sentences</td><td class="bad">BLOCKED</td><td class="ok">sent to model</td></tr>
+        <tr><td>Red/green TDD summary</td><td class="bad">BLOCKED</td><td class="ok">sent to model</td></tr>
+        <tr><td><code>Tests: 64 passed, 0 failed</code></td><td>READY_TO_SHIP</td><td>READY_TO_SHIP</td></tr>
+      </tbody>
+    </table>
+    <p>Each case is now a regression test. The change is in
+    <a href="https://github.com/abhishekswe/agent-fastpath/commit/38675dea539ade7cc53fd902e0c600fa183d53c3">this commit</a>.</p>
+
+    <h2>The rule I use now</h2>
+    <div class="takeaway"><p>A fast path is a cheap way to say no. It may say yes only when the input contains
+    nothing it doesn't understand. If a diff, a config change or free text rides along, the fast path steps
+    aside and the reviewer reads it.</p></div>
+    <p>Blocking early on a clear failure errs toward a person taking a look. Approving early skips the only
+    part of the system that reads meaning. So when I add a rule, I first ask which way it moves the verdict.
+    Rules that tighten can be broad. Rules that loosen need proof that the input is only what they were
+    written for.</p>
+
+    <div class="author">
+      <img src="https://avatars.githubusercontent.com/u/111110855?s=112" alt="" width="56" height="56" loading="lazy">
+      <p>I'm <a href="/">Abhishek Kumar</a>, a software engineer in Gurugram working on React and Next.js, and the
+      maintainer of <a href="/agent-fastpath/">agent-fastpath</a>
+      (<a href="https://github.com/abhishekswe/agent-fastpath">GitHub</a>,
+      <a href="https://www.npmjs.com/package/agent-fastpath">npm</a>). More in <a href="/notes/">Notes</a>, or
+      find me on <a href="https://www.linkedin.com/in/abhishekkr-swe/">LinkedIn</a> and
+      <a href="https://x.com/abhishekswe">X</a>.</p>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <span>© 2026 Abhishek Kumar</span>
+  <nav aria-label="Footer"><a href="/">Home</a><a href="/notes/">Notes</a><a href="/notes/feed.xml">Feed</a><a href="https://github.com/abhishekswe">GitHub</a></nav>
+</footer>
+</body>
+</html>
